@@ -15,5 +15,16 @@ public class MainMenu : MonoBehaviour
     // Quit the game
     public void QuitGame(){
         Application.Quit();
+        Debug.Log("Closing");
     }
+
+    private void Update() {
+        if(Input.GetKeyDown("escape")){
+            Application. Quit();
+            Debug.Log("Closing");
+
+        }
+
+        
+    }    
 }
