@@ -20,17 +20,16 @@ public struct Wheel
 
 public class PlayerCar : MonoBehaviour
 {
-    [SerializeField]
-    private float maxAcceleration = 20.0f;
-    [SerializeField]
-    private float turnSensitivity = 1.0f;       // Level of sensitivity to response
-    [SerializeField]
-    private float maxSteerAngle = 45.0f;
-    [SerializeField]
-    private List<Wheel> wheels;
+    [SerializeField] private float maxAcceleration = 100.0f;
+    [SerializeField] private float turnSensitivity = 1.0f;       // Level of sensitivity to response
+    [SerializeField] private float maxSteerAngle = 45.0f;
+    [SerializeField] private List<Wheel> wheels;
+    [SerializeField] private Vector3 _centerOfMass;
 
-    //[SerializeField]
-    //private Vector3 _centerOfMass;
+ 
+    public float breaking_force = 300f;
+    public float current_break_force = 0f;
+
 
     private float inputX, inputY;
     private Rigidbody rigid_body;
@@ -38,11 +37,25 @@ public class PlayerCar : MonoBehaviour
    
     private void Start()
     {
-        // rigid_body = GetComponent<Rigidbody>();
-        // rigid_body.centerOfMass = _centerOfMass;
+        rigid_body = GetComponent<Rigidbody>();
+        rigid_body.centerOfMass = _centerOfMass;
      
     }
 
+private void FixedUpdate() {
+    if(Input.GetKey(KeyCode.E)){
+        current_break_force = breaking_force;
+    }else{
+        current_break_force = 0f;
+    }
+    
+
+    wheels[0].collider.brakeTorque = current_break_force;
+    wheels[1].collider.brakeTorque = current_break_force;
+    wheels[2].collider.brakeTorque = current_break_force;
+    wheels[3].collider.brakeTorque = current_break_force;
+    
+}
 
     private void Update()
     {
@@ -64,6 +77,9 @@ public class PlayerCar : MonoBehaviour
         Turn();             // To turn the wheel model
    }
 
+    private void Break(){
+
+    }
    private void GetInputs()
    {
         inputX = Input.GetAxis("Horizontal");
