@@ -38,8 +38,8 @@ public class PlayerCar : MonoBehaviour
    
     private void Start()
     {
-     //rigid_body = GetComponent<Rigidbody>();
-     //rigid_body.centerOfMass = _centerOfMass;
+        // rigid_body = GetComponent<Rigidbody>();
+        // rigid_body.centerOfMass = _centerOfMass;
      
     }
 
@@ -78,6 +78,8 @@ public class PlayerCar : MonoBehaviour
         {
             wheel.collider.motorTorque = inputY * maxAcceleration * 500 * Time.deltaTime;
         }
+
+     
    }
 
     // Tur Front wheels (right-left)
