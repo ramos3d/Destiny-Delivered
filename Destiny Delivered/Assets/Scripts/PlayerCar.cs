@@ -20,7 +20,7 @@ public struct Wheel
 
 public class PlayerCar : MonoBehaviour
 {
-    [SerializeField] private float maxAcceleration = 100.0f;
+    [SerializeField] private float maxAcceleration = 30.0f;
     [SerializeField] private float turnSensitivity = 1.0f;       // Level of sensitivity to response
     [SerializeField] private float maxSteerAngle = 45.0f;
     [SerializeField] private List<Wheel> wheels;
