@@ -15,9 +15,9 @@ Electrifying car race made by Grizzly Grit Games team
 <dt> This class is responsible for more game general aspects such as Game User Interface, Pause/Resume control, Game Over, Scores and Ranking (if applicable). </dt>
 </dl>
 
-## AISelfDriverNPC()
+## AICarNPC()
 <dl>
-<dt> This class is responsible for NPCs AI implementation for self-driving cars. </dt>
+<dt> This class is responsible for NPCs AI implementation for self-driving. </dt>
 </dl>
 
 ## LevelController()
