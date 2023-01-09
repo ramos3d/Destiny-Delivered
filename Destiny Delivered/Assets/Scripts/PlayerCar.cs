@@ -24,7 +24,7 @@ public class PlayerCar : MonoBehaviour
     [SerializeField] private float turnSensitivity = 1.0f;       // Level of sensitivity to response
     [SerializeField] private float maxSteerAngle = 45.0f;
     [SerializeField] private List<Wheel> wheels;
-    [SerializeField] private Vector3 _centerOfMass;
+   // [SerializeField] private Vector3 _centerOfMass;
 
  
     public float breaking_force = 300f;
@@ -37,25 +37,14 @@ public class PlayerCar : MonoBehaviour
    
     private void Start()
     {
-        rigid_body = GetComponent<Rigidbody>();
-        rigid_body.centerOfMass = _centerOfMass;
+      //  rigid_body = GetComponent<Rigidbody>();
+      //  rigid_body.centerOfMass = _centerOfMass;
      
     }
 
-private void FixedUpdate() {
-    if(Input.GetKey(KeyCode.E)){
-        current_break_force = breaking_force;
-    }else{
-        current_break_force = 0f;
+    private void FixedUpdate() {
+        Break();
     }
-    
-
-    wheels[0].collider.brakeTorque = current_break_force;
-    wheels[1].collider.brakeTorque = current_break_force;
-    wheels[2].collider.brakeTorque = current_break_force;
-    wheels[3].collider.brakeTorque = current_break_force;
-    
-}
 
     private void Update()
     {
@@ -64,7 +53,6 @@ private void FixedUpdate() {
 
         // Respawn for Test purpose
         if(Input.GetKeyDown("space")){
-            //Destroy(this);
             var _player = GameObject.FindGameObjectWithTag("Player");
             var _respawn = GameObject.FindGameObjectWithTag("Respawn");
             _player.transform.position = _respawn.transform.position;
@@ -72,14 +60,27 @@ private void FixedUpdate() {
         }
         
     }
-   private void LateUpdate() {
+
+    private void LateUpdate() {
         Move(); 
         Turn();             // To turn the wheel model
-   }
-
+    }
+    
+    // Breaking
     private void Break(){
+        if(Input.GetKey(KeyCode.E)){
+            current_break_force = breaking_force;
+        }else{
+            current_break_force = 0f;
+        }
+        wheels[0].collider.brakeTorque = current_break_force * Time.deltaTime;
+        wheels[1].collider.brakeTorque = current_break_force * Time.deltaTime;
+        wheels[2].collider.brakeTorque = current_break_force * Time.deltaTime;
+        wheels[3].collider.brakeTorque = current_break_force * Time.deltaTime;
 
     }
+
+    // Get generical movements
    private void GetInputs()
    {
         inputX = Input.GetAxis("Horizontal");
