@@ -5,6 +5,11 @@ Electrifying car race made by Grizzly Grit Games team
 2022.1.19f
 
 # :computer: Main Classes
+## Cars()
+<dl>
+<dt> This is an abstract class where the PlayerCar and AICarNP classes will inherit and implement their common methods. </dt>
+</dl>
+
 ## PlayerCar()
 <dl>
 <dt> This class is responsible for controlling only the player's car actions and interactions with the environment. </dt>
