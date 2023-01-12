@@ -7745,6 +7745,8 @@ MonoBehaviour:
     axel: 0
   breaking_force: 300
   current_break_force: 0
+  inputX: 0
+  inputY: 0
 --- !u!1 &952793196
 GameObject:
   m_ObjectHideFlags: 0
@@ -8364,6 +8366,7 @@ GameObject:
   - component: {fileID: 1049040944}
   - component: {fileID: 1049040943}
   - component: {fileID: 1049040945}
+  - component: {fileID: 1049040946}
   m_Layer: 0
   m_Name: NPC_6D
   m_TagString: Untagged
@@ -8446,6 +8449,41 @@ MonoBehaviour:
     axel: 1
   breaking_force: 300
   current_break_force: 0
+  inputX: 0
+  inputY: 0
+--- !u!114 &1049040946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049040941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7349b27b31784b42876591a51686a7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAcceleration: 30
+  turnSensitivity: 1
+  maxSteerAngle: 45
+  wheels:
+  - model: {fileID: 1000011865188503}
+    collider: {fileID: 1176311664}
+    axel: 0
+  - model: {fileID: 1000013838699585}
+    collider: {fileID: 851870060}
+    axel: 0
+  - model: {fileID: 1000010612592527}
+    collider: {fileID: 620194103}
+    axel: 1
+  - model: {fileID: 1000011278172463}
+    collider: {fileID: 1499930335}
+    axel: 1
+  breaking_force: 300
+  current_break_force: 0
+  inputX: 0
+  inputY: 0
+  speed: 2
 --- !u!1 &1052144455
 GameObject:
   m_ObjectHideFlags: 0
@@ -8878,18 +8916,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4555563248116642, guid: 5a827a6164cd54bedab62e630aae41bf, type: 3}
   m_PrefabInstance: {fileID: 603910232}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1143467192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1069194055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddfd7bb65ce3f14458b1746ed8ab53b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1143467196
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21189,6 +21215,8 @@ MonoBehaviour:
     axel: 1
   breaking_force: 90000000
   current_break_force: 0
+  inputX: 0
+  inputY: 0
 --- !u!54 &2047808392
 Rigidbody:
   m_ObjectHideFlags: 0
