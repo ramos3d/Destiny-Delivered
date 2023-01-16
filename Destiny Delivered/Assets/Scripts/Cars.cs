@@ -19,10 +19,10 @@ public struct Wheel
 
 public class Cars : MonoBehaviour
 {
-    [SerializeField] public float maxAcceleration = 30.0f;
-    [SerializeField] public float turnSensitivity = 1.0f;       // Level of sensitivity to response
-    [SerializeField] public float maxSteerAngle = 45.0f;
-    [SerializeField] public List<Wheel> wheels;
+    public float maxAcceleration = 30.0f;
+    public float turnSensitivity = 1.0f;       // Level of sensitivity to response
+    public float maxSteerAngle = 45.0f;
+    public List<Wheel> wheels;
     public float breaking_force = 300f;
     public float current_break_force = 0f;
     public float inputX, inputY;
@@ -30,7 +30,7 @@ public class Cars : MonoBehaviour
  
 
      // Break the car
-    public void Break(){
+    public virtual void Break(){
         if(Input.GetKey(KeyCode.E)){
             current_break_force = breaking_force;
         }else{
@@ -43,7 +43,7 @@ public class Cars : MonoBehaviour
     }
     
     // Get generic Unity default keys
-    public void GetInputs(){
+    public virtual void GetInputs(){
         inputX = Input.GetAxis("Horizontal");
         inputY = Input.GetAxis("Vertical");
     }

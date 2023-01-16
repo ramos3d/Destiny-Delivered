@@ -9,33 +9,73 @@ using UnityEngine;
 public class AICarNPC : Cars
 {
     // Variables
-    public float speed = 2;
 
-    private void Start() {
-        Move(); 
-    }
-    private void FixedUpdate() {
-        Break();
-    }
+    [SerializeField] private Boolean near;
+
+
+  private void Start() {
+    // Move();
+    near = false;
+    StartCoroutine(Example());
+  }
+
+   
     private void Update(){
-        AnimateWheels();
-        GetInputs(); // Self Driving
+       
+       
+       /* AnimateWheels();
+        var origin = this.transform.position;
+        RaycastHit hit;
+       
+            if (Physics.Raycast(origin, Vector3.forward, out hit, 23.0f))
+            {
+                if (hit.collider.CompareTag("NPC"))
+                {
+                    near = true;
+                }else{
+                    near = false;
+                }
+                
+            }
+
+       if (near == true)
+        {
+            Debug.Log("There is a stopped car ahead");
+            Break();
+            near = false;
+        }
+        if (near == false){
+            Debug.Log(" Acelerate...");
+            Move();
+        }
+           
+       */
+       
       
     }
+
+  IEnumerator Example()
+    {
+       
+        yield return new WaitForSecondsRealtime(5);
+        print(Time.time);
+        StartCoroutine(Example());
+    }
+   
    
     private void LateUpdate() {
-        
-        Move();
+       
+       
         Turn();             // To turn the wheel model
     }
 
     // SELF Move the car via wheel colliders
     public override void Move(){
-       
+       //near = false;
+       current_break_force = 0f;
+        inputY = 0.5f;
         foreach (var wheel in wheels)
         {
-            inputY = 0.1f; // Speed
-         Debug.Log("Aqui: " + inputY);
             wheel.collider.motorTorque = inputY * maxAcceleration * 500 * Time.deltaTime;
         }     
     }
@@ -44,7 +84,7 @@ public class AICarNPC : Cars
     public override void Turn(){
         foreach (var wheel in wheels)
         {
-            inputX = 1f; // 1 , -1
+            inputX = 0f; // 1 , -1
             if (wheel.axel == Axel.Front)
             {
                 var _steerAngle = inputX * turnSensitivity * maxSteerAngle;
@@ -52,4 +92,29 @@ public class AICarNPC : Cars
             }
         }
     }
+
+    public override void Break(){
+         if(near == true){
+            current_break_force = 50000f;
+            Debug.Log("Break ativado. Stoooooooop!");
+        }else{
+            current_break_force = 0f;
+            Move();
+        }
+        foreach (var wheel in wheels)
+        {
+            Debug.Log(" - Cada roda foi freada");
+           // current_break_force = 50000f;
+            wheel.collider.brakeTorque = current_break_force * Time.deltaTime;
+        }
+    }
+    
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(this.transform.position, Vector3.forward * 23.0f);
+
+    }
+
+   
 }
