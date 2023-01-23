@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// CarEngine
 public class CarSelfDrive : MonoBehaviour
 {
     // Variables
@@ -14,16 +14,19 @@ public class CarSelfDrive : MonoBehaviour
     public WheelCollider wheelRL;
     public WheelCollider wheelRR;
 
-    public float maxMotorque = 80f;
-    public float maxBrakeTorque = 150f;
+    public float maxMotorque = 160f;
+    public float maxBrakeTorque = 300f;
     public float maxSpeed = 20f;
-    public bool isBreaking = false;
+    public bool isBreaking = true;
 
     private int currentNode = 0;
     
     public float currentSpeed = 0f;
 
-    // Start is called before the first frame update
+    [Header("Sensors")]
+    public float sensorLenght = 20f;
+
+    
     void Start()
     {
         Transform[] pathTransforms = path.GetComponentsInChildren<Transform>();         
@@ -52,11 +55,33 @@ public class CarSelfDrive : MonoBehaviour
  
     void FixedUpdate()
     {
+        Sensors();
         TurnSteer();
         Drive();
         CheckPointDistance();
         Braking();
     }
+
+    private void Sensors(){
+        Vector3 direction = Vector3.forward;
+        Ray theRay = new Ray(transform.position, transform.TransformDirection(direction * sensorLenght));
+        Debug.DrawRay(transform.position, transform.TransformDirection(direction * sensorLenght));
+
+        if (Physics.Raycast(theRay, out RaycastHit hit, sensorLenght))
+        {
+           if (hit.collider.tag == "NPC" || hit.collider.tag == "Player")
+           {    
+                print("There is a car here: " + hit.collider.tag);
+                isBreaking = true;
+           }
+        }else 
+        {
+           Debug.Log("It's free ");
+           isBreaking = false;
+        }
+    }
+
+
 
     private void TurnSteer(){
         Vector3 relativeVector = transform.InverseTransformPoint( nodes[currentNode].position);
@@ -100,9 +125,15 @@ public class CarSelfDrive : MonoBehaviour
         {
             // It maight turns beacking light on if it exists
             // Break wheels
+            wheelFL.brakeTorque = maxBrakeTorque;
+            wheelFR.brakeTorque = maxBrakeTorque;
+
             wheelRL.brakeTorque = maxBrakeTorque;
             wheelRR.brakeTorque = maxBrakeTorque;
         }else{
+            wheelFL.brakeTorque = 0;
+            wheelFR.brakeTorque = 0;
+
             wheelRL.brakeTorque = 0;
             wheelRR.brakeTorque = 0;
         }
