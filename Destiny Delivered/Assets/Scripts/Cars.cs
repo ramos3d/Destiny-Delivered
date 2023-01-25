@@ -19,9 +19,9 @@ public struct Wheel
 
 public class Cars : MonoBehaviour
 {
-    public float maxAcceleration = 30.0f;
+    public float maxAcceleration = 10.0f;
     public float turnSensitivity = 1.0f;       // Level of sensitivity to response
-    public float maxSteerAngle = 45.0f;
+    public float maxSteerAngle = 43.0f;
     public List<Wheel> wheels;
     public float breaking_force = 300f;
     public float current_break_force = 0f;
@@ -63,7 +63,7 @@ public class Cars : MonoBehaviour
             if (wheel.axel == Axel.Front)
             {
                 var _steerAngle = inputX * turnSensitivity * maxSteerAngle;
-                wheel.collider.steerAngle = Mathf.Lerp(wheel.collider.steerAngle, _steerAngle, 0.5f); // Interpolate betwwen two values to make it smoothier
+                wheel.collider.steerAngle = Mathf.Lerp(wheel.collider.steerAngle, _steerAngle, 0.2f); // Interpolate betwwen two values to make it smoothier
             }
         }
     }
