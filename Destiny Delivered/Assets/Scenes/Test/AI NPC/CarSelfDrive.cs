@@ -65,7 +65,7 @@ public class CarSelfDrive : MonoBehaviour
     private void Sensors(){
         Vector3 direction = Vector3.forward;
         Ray theRay = new Ray(transform.position, transform.TransformDirection(direction * sensorLenght));
-        Debug.DrawRay(transform.position, transform.TransformDirection(direction * sensorLenght));
+        Debug.DrawRay(transform.position, transform.TransformDirection(direction * sensorLenght), Color.green);
 
         if (Physics.Raycast(theRay, out RaycastHit hit, sensorLenght))
         {
