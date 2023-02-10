@@ -24,11 +24,15 @@ public class CarSelfDrive : MonoBehaviour
     public float currentSpeed = 0f;
 
     [Header("Sensors")]
-    public float sensorLenght = 20f;
-
+    public float sensorLength = 10f;
+    public float sideSensorPosition = 1.26f;
+    public float frontSensorAngle = 1108.2f;
     
+
+    private bool body_detected = false;
     void Start()
     {
+         
         Transform[] pathTransforms = path.GetComponentsInChildren<Transform>();         
         nodes = new List<Transform>();
 /*
@@ -52,7 +56,7 @@ public class CarSelfDrive : MonoBehaviour
 
     }
 
- 
+
     void FixedUpdate()
     {
         Sensors();
@@ -64,10 +68,25 @@ public class CarSelfDrive : MonoBehaviour
 
     private void Sensors(){
         Vector3 direction = Vector3.forward;
-        Ray theRay = new Ray(transform.position, transform.TransformDirection(direction * sensorLenght));
-        Debug.DrawRay(transform.position, transform.TransformDirection(direction * sensorLenght), Color.green);
+        Vector3 sideSensor = transform.position;
 
-        if (Physics.Raycast(theRay, out RaycastHit hit, sensorLenght))
+        Ray theRay = new Ray(transform.position, transform.TransformDirection(direction * sensorLength));
+        
+        // RIGHT sensor
+        sideSensor.z += sideSensorPosition;
+        Ray sideRay =new Ray(sideSensor, transform.TransformDirection(direction * sensorLength));
+        
+        // ANGLE
+        /*
+        Vector3 new_direction =  Quaternion.AngleAxis(frontSensorAngle, transform.up) * transform.forward;
+        Ray sideAngle =new Ray(sideSensor, transform.TransformDirection(new_direction * sensorLength));
+        */
+
+        Debug.DrawRay(transform.position, transform.TransformDirection(direction * sensorLength), Color.green);
+       
+      
+
+        if (Physics.Raycast(theRay, out RaycastHit hit, sensorLength))
         {
            if (hit.collider.tag == "NPC" || hit.collider.tag == "Player")
            {    
@@ -76,10 +95,70 @@ public class CarSelfDrive : MonoBehaviour
            }
         }else 
         {
-           Debug.Log("It's free ");
-           isBreaking = false;
+            if(!body_detected){
+                Debug.Log("It's free ");
+                isBreaking = false;
+            }
+           
         }
+        
+        
+        // RIGHT
+        Debug.DrawRay(sideSensor, transform.TransformDirection(direction * sensorLength), Color.blue);
+        if (Physics.Raycast(sideRay, out hit, sensorLength))
+        {
+           if (hit.collider.tag == "NPC" || hit.collider.tag == "Player")
+           {    
+                print("Right detected: " + hit.collider.tag  );
+                isBreaking = true;
+                body_detected = true;
+           }
+        }else 
+        {
+           
+                Debug.Log("It's free ");
+                isBreaking = false;
+        }
+        
+        // RIGHT ANGLE
+      /*  Debug.DrawRay(sideSensor, transform.TransformDirection(new_direction * sensorLength) , Color.yellow);
+        if (Physics.Raycast(sideAngle, out hit, sensorLength))
+        {
+           if (hit.collider.tag == "NPC" || hit.collider.tag == "Player")
+           {   
+                print("Right detected BREAK: ");
+                isBreaking = true;
+           }
+        }else 
+        {
+            isBreaking = false;
+        }
+        */
+       
+       // LEFT sensor
+        sideSensor.z -= 2*sideSensorPosition;
+       
+        
+        if (Physics.Raycast(sideRay, out hit, sensorLength))
+        {
+           if (hit.collider.tag == "NPC" || hit.collider.tag == "Player")
+           {    
+             print("Left detected: " + hit.collider.tag  + Time.deltaTime);
+                isBreaking = true;
+                body_detected = true;
+           }
+        }else 
+        {
+          
+                Debug.Log("It's free ");
+                isBreaking = false;
+           
+        }
+        Debug.DrawRay(sideSensor, transform.TransformDirection(direction * sensorLength), Color.white);
+        
+
     }
+
 
 
 
@@ -109,7 +188,7 @@ public class CarSelfDrive : MonoBehaviour
     
     private void CheckPointDistance(){
         if (Vector3.Distance(this.transform.position, nodes[currentNode].position) < 0.5f){
-            Debug.Log("Node Atual: " + currentNode);
+           // Debug.Log("Node Atual: " + currentNode);
             if (currentNode == nodes.Count -1)
             {
                 currentNode = 0;
