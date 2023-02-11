@@ -10896,7 +10896,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 02:00
+  m_text: 00:30
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ff736b31c6af70c4caeb66383d6c50c3, type: 2}
   m_sharedMaterial: {fileID: 1329112823346527286, guid: ff736b31c6af70c4caeb66383d6c50c3, type: 2}
@@ -25334,6 +25334,7 @@ GameObject:
   - component: {fileID: 2047808392}
   - component: {fileID: 2047808391}
   - component: {fileID: 2047808394}
+  - component: {fileID: 2047808395}
   m_Layer: 0
   m_Name: Player_Car
   m_TagString: Player
@@ -25422,6 +25423,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.3, y: 0.62, z: 5.27}
   m_Center: {x: -6.48, y: -2.7, z: 7.73}
+--- !u!114 &2047808395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047808390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e09f88c17172348ab1a60c2c53f308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 1180518421}
+  milliText: {fileID: 188599361}
+  timeValue: 90
+  milliseconds: 0
 --- !u!1001 &2054908449
 PrefabInstance:
   m_ObjectHideFlags: 0
