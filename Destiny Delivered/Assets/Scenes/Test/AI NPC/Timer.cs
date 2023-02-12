@@ -8,12 +8,10 @@ public class Timer : MonoBehaviour
 {
     public TMP_Text timerText;
     public TMP_Text milliText;
-    public float timeValue = 30f;
-    public int milliseconds;
+    [Header("Time in seconds")]
+    public float timeValue = 120;
+    public float milliseconds;
 
-private void Start() {
-    
-}
     void Update()
     {
         if(timeValue > 0){
@@ -22,8 +20,9 @@ private void Start() {
         }else
         {
             timeValue = 0;
-            milliseconds = 0;   
+       
         }
+       
         DisplayTime(timeValue);
     }
 
@@ -32,11 +31,20 @@ private void Start() {
             timeToDisplay = 0;
         }
 
-        float minutes = Mathf.FloorToInt(timeToDisplay/60);
-        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-         milliseconds = Mathf.FloorToInt(Time.deltaTime * 1000);
+        string minutes = Mathf.FloorToInt(timeToDisplay/60).ToString();
+        string seconds = Mathf.FloorToInt(timeToDisplay % 60).ToString();
+        milliseconds = (int)((timeValue * 1000) % 1000);
+     
+        timerText.text =  "0" + string.Format("{0:00}:{1:00}", minutes, seconds);
+        milliText.text = string.Format("{0:00}", milliseconds).Substring(1);
+       
+    
 
-        timerText.text = string.Format("{0:00}:{0:30}", minutes, seconds);
-        milliText.text = string.Format("{0:00}", milliseconds);
+        if (timeToDisplay == 0){
+             timerText.text = "00:00";
+             milliText.text = "00";
+        }
+       
     }
+    
 }

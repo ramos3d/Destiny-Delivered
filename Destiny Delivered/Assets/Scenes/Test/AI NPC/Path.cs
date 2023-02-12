@@ -31,9 +31,7 @@ public class Path : MonoBehaviour
             if (pathTransforms[i] != transform)
             {
                 nodes.Add(pathTransforms[i]);
-                
             }
-            
         }
         */
 

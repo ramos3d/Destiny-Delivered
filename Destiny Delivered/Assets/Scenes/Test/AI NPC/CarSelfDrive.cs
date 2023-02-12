@@ -28,10 +28,13 @@ public class CarSelfDrive : MonoBehaviour
     public float sideSensorPosition = 1.26f;
     public float frontSensorAngle = 1108.2f;
     
+    public float new_axi = -0.9f;
 
     private bool body_detected = false;
     void Start()
     {
+        // Prevent Flipping
+        gameObject.GetComponent<Rigidbody>().centerOfMass = new Vector3(0, new_axi, 0);
          
         Transform[] pathTransforms = path.GetComponentsInChildren<Transform>();         
         nodes = new List<Transform>();
@@ -81,25 +84,21 @@ public class CarSelfDrive : MonoBehaviour
         Vector3 new_direction =  Quaternion.AngleAxis(frontSensorAngle, transform.up) * transform.forward;
         Ray sideAngle =new Ray(sideSensor, transform.TransformDirection(new_direction * sensorLength));
         */
-
         Debug.DrawRay(transform.position, transform.TransformDirection(direction * sensorLength), Color.green);
-       
-      
 
         if (Physics.Raycast(theRay, out RaycastHit hit, sensorLength))
         {
            if (hit.collider.tag == "NPC" || hit.collider.tag == "Player")
            {    
-                print("There is a car here: " + hit.collider.tag);
+               // print("There is a car here: " + hit.collider.tag);
                 isBreaking = true;
            }
         }else 
         {
             if(!body_detected){
-                Debug.Log("It's free ");
+               // Debug.Log("It's free ");
                 isBreaking = false;
             }
-           
         }
         
         
@@ -109,14 +108,13 @@ public class CarSelfDrive : MonoBehaviour
         {
            if (hit.collider.tag == "NPC" || hit.collider.tag == "Player")
            {    
-                print("Right detected: " + hit.collider.tag  );
+                //print("Right detected: " + hit.collider.tag  );
                 isBreaking = true;
                 body_detected = true;
            }
         }else 
         {
-           
-                Debug.Log("It's free ");
+                //Debug.Log("It's free ");
                 isBreaking = false;
         }
         
@@ -137,8 +135,6 @@ public class CarSelfDrive : MonoBehaviour
        
        // LEFT sensor
         sideSensor.z -= 2*sideSensorPosition;
-       
-        
         if (Physics.Raycast(sideRay, out hit, sensorLength))
         {
            if (hit.collider.tag == "NPC" || hit.collider.tag == "Player")
@@ -149,14 +145,10 @@ public class CarSelfDrive : MonoBehaviour
            }
         }else 
         {
-          
-                Debug.Log("It's free ");
+                //Debug.Log("It's free ");
                 isBreaking = false;
-           
         }
         Debug.DrawRay(sideSensor, transform.TransformDirection(direction * sensorLength), Color.white);
-        
-
     }
 
 
@@ -217,6 +209,5 @@ public class CarSelfDrive : MonoBehaviour
             wheelRR.brakeTorque = 0;
         }
     }
-
-        
+       
 }
