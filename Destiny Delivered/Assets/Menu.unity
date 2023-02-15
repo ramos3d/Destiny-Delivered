@@ -222,6 +222,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 1998368423}
     m_Modifications:
     - target: {fileID: 178130, guid: 70bf34f6c25c948458f254e87188b00b, type: 3}
@@ -274,12 +275,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3313442307395238052, guid: 70bf34f6c25c948458f254e87188b00b, type: 3}
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 70bf34f6c25c948458f254e87188b00b, type: 3}
 --- !u!1001 &585256936
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8780424320546655305, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
@@ -331,6 +334,7 @@ PrefabInstance:
       value: Crate_01 (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
 --- !u!1 &661831901 stripped
 GameObject:
@@ -405,6 +409,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8780424320546655305, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
@@ -456,12 +461,14 @@ PrefabInstance:
       value: Crate_01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
 --- !u!1001 &1040140368
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8780424320546655305, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
@@ -513,12 +520,14 @@ PrefabInstance:
       value: Crate_01 (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
 --- !u!1001 &1166717514
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1014797949310951927, guid: e7db4011ca7f11c408c1ad18b34ed04d, type: 3}
@@ -570,6 +579,7 @@ PrefabInstance:
       value: Ground_Road
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: e7db4011ca7f11c408c1ad18b34ed04d, type: 3}
 --- !u!1 &1722950589
 GameObject:
@@ -770,4 +780,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af80aa3942a3204d874aff617a707bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  maxAcceleration: 200
+  turnSensitivity: 1
+  maxSteerAngle: 35
+  wheels: []
+  breaking_force: 300
+  current_break_force: 0
+  inputX: 0
+  inputY: 0
+  new_axi: -0.9
