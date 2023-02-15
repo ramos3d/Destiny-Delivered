@@ -139,7 +139,7 @@ public class CarSelfDrive : MonoBehaviour
         {
            if (hit.collider.tag == "NPC" || hit.collider.tag == "Player")
            {    
-             print("Left detected: " + hit.collider.tag  + Time.deltaTime);
+                //print("Left detected: " + hit.collider.tag  + Time.deltaTime);
                 isBreaking = true;
                 body_detected = true;
            }

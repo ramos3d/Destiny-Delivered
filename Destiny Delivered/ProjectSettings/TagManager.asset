@@ -7,6 +7,13 @@ TagManager:
   - Timer
   - Energy_bar
   - NPC
+  - Reducer
+  - Rotor
+  - Checkpoint_1
+  - Checkpoint_2
+  - Checkpoint_3
+  - Checkpoint_4
+  - Checkpoint_5
   layers:
   - Default
   - TransparentFX
