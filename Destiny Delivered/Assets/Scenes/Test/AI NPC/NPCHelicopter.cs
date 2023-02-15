@@ -14,7 +14,7 @@ public class NPCHelicopter : MonoBehaviour
     public float maxSpeed = 2.0f;
     public bool move = false;
 
-    Vector3 limit = new Vector3(0, 50, 0);
+    Vector3 limit = new Vector3(0, 1, 1);
     
 
     void Start()
@@ -45,10 +45,10 @@ public class NPCHelicopter : MonoBehaviour
 
     void FlyAround(){
         if(move){ // Down
-            gameObject.transform.position -= new Vector3(0, 1, 1) * Time.deltaTime * 2f;
+            gameObject.transform.position -= limit * Time.deltaTime * 2f;
         }else{  // Up
            
-            gameObject.transform.position += new Vector3(0, 1, 1) * Time.deltaTime * 2f;
+            gameObject.transform.position +=  limit * Time.deltaTime * 2f;
         }
 
         if (gameObject.transform.position.y <=36.6f )

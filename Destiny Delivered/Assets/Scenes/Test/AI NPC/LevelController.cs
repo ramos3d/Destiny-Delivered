@@ -23,7 +23,7 @@ public class LevelController : Timer
     public GameObject startpoint_l2;
     public GameObject player_prefab;
 
-
+    public static bool[] level_control = new bool[]{true, false, false, false, false};
 
     public LevelController(){
         level1_msg = new string[]{
@@ -71,7 +71,8 @@ public class LevelController : Timer
         
     }
     public void LoadLevel(int level_number){
-        current_level = level_number;
+        Debug.Log("************ LOAD LEVEL Called at: "+ Time.deltaTime + " | Level? " + level_number);
+       current_level = level_number;
         switch (level_number)
         {
             case 1:
@@ -83,11 +84,11 @@ public class LevelController : Timer
                 money = 100.00f;
                 wallet.text = "$ " + money.ToString("F2");
 
-                print("LEVEL: " + level_number);
+                print(" Prime LEVEL: " + level_number);
                 break;
 
             case 2:
-                print("LEVEL: " + level_number);
+                print("Second LEVEL: " + level_number);
                 GameObject existingObject = GameObject.FindWithTag("Player");
                 if (existingObject != null)   Destroy(existingObject);
     
@@ -102,7 +103,7 @@ public class LevelController : Timer
                 
             break;
             default:
-                current_level = 1;
+                //current_level = 1;
             break;
         }
     }

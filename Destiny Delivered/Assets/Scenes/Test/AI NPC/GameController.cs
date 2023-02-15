@@ -78,28 +78,8 @@ public class GameController : LevelController
             UI_RESULTS.SetActive(!UI_RESULTS.activeSelf);
            
         }
-        
+     
 
-  // Confirm that the player has arrived at the drop point
-  /*  private void OnTriggerEnter(Collider other) {
-        if (other.GetComponent<Collider>().tag == "Player")
-        {
-            if(this.GetComponent<Collider>().tag == "Checkpoint_1" && this.current_level == 1){
-                Debug.Log("LevelController says: YOU WIN!!!");
-                Timer._delivery_completed = true;           // stop the timer
-                msg = "Well done! \n Package delivered on time.";
-              
-                this.NextLevel();
-            }
-
-            if(this.GetComponent<Collider>().tag == "Checkpoint_2" && this.current_level == 2){
-                Timer._delivery_completed = true;           // stop the timer
-                msg = "Well done! \n Package delivered on time. Lv. "+ this.current_level;
-                this.NextLevel();
-            }
-        }
-    }
-    */
 
     void PauseGame ()
     {
