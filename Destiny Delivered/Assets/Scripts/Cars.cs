@@ -9,6 +9,7 @@ public enum Axel
     Rear
 }
 
+
 [Serializable]
 public struct Wheel
 {
@@ -27,14 +28,24 @@ public class Cars : MonoBehaviour
     public float current_break_force = 0f;
     public float inputX, inputY;
   
- 
+    public GameObject break_light;
 
+
+    private void Start() {
+        break_light = GameObject.FindWithTag("BreakLight");
+        break_light.SetActive(false);
+
+        
+    }
      // Break the car
     public virtual void Break(){
+        
         if(Input.GetKey(KeyCode.E)){
-            current_break_force = breaking_force;
+           current_break_force = breaking_force;
+           break_light.SetActive(true);
         }else{
             current_break_force = 0f;
+            break_light.SetActive(false);
         }
         foreach (var wheel in wheels)
         {

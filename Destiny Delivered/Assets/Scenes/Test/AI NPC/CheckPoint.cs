@@ -14,7 +14,7 @@ public class CheckPoint : GameController
         if (other.GetComponent<Collider>().tag == "Player")
         {
          
-            if(this.GetComponent<Collider>().tag == "Checkpoint_1" && this.current_level == 1){
+            if(this.GetComponent<Collider>().tag == "Checkpoint_1" && LevelController.current_level == 1){
                 GameController.new_msg = true;
                 Timer._delivery_completed = true;           // stop the timer
                 msg = "Well done! \n Package has been delivered on time.";
@@ -26,9 +26,9 @@ public class CheckPoint : GameController
             }
 
 
-            if(this.GetComponent<Collider>().tag == "Checkpoint_2" && this.current_level == 2){
+            if(this.GetComponent<Collider>().tag == "Checkpoint_2" && LevelController.current_level == 2){
                 Timer._delivery_completed = true;           // stop the timer
-                GameController.msg = "Well done! \n Package delivered on time. Lv. "+ this.current_level;
+                GameController.msg = "Well done! \n Package delivered on time. Lv. "+ LevelController.current_level;
               
             }
         }
@@ -40,8 +40,11 @@ public class CheckPoint : GameController
         mission_messageText.gameObject.SetActive(false);
         UI_MESSAGE.SetActive(false);
         GameController.new_msg = false;
+        // Show Score
+        UI_RESULTS.SetActive(true);
         yield return new WaitForSeconds(4);
-        
+        // Hide Score
+        UI_RESULTS.SetActive(false);
         // Prevent mutiple calls to the same level
         if(LevelController.level_control[current_level+1] == false){
             this.NextLevel();

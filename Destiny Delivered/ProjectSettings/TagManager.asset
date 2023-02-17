@@ -14,6 +14,8 @@ TagManager:
   - Checkpoint_3
   - Checkpoint_4
   - Checkpoint_5
+  - GPS_icon
+  - BreakLight
   layers:
   - Default
   - TransparentFX

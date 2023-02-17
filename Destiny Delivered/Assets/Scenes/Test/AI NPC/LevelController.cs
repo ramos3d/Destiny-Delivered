@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 public class LevelController : Timer
 {
     private int total_levels = 5;
     //Player variables based on level
-    private float payment = 0.00f;         // Random.Rande(15, ?)
+    public float payment ;         // Random.Rande(15, ?)
     private string desdination = null;     
     private float delivered_at = 0;
-    private float  money = 0f;
+    public float  money;
     public TMP_Text wallet;
     private string message_to_player = null;
-    public int current_level = 0;
+    public static int current_level = 0;
     private string[] level1_msg;
     private string[] level2_msg;
     private string[] level3_msg;
@@ -24,6 +24,8 @@ public class LevelController : Timer
     public GameObject player_prefab;
 
     public static bool[] level_control = new bool[]{true, false, false, false, false};
+ 
+
 
     public LevelController(){
         level1_msg = new string[]{
@@ -36,10 +38,10 @@ public class LevelController : Timer
         };
     }
            
-    // Start is called before the first frame update
-    public void StartGame()
+
+    public void StartGame(int level)
     {
-        LoadLevel(1);
+        LoadLevel(level);
     }
 
     public string[] getGameMessages(){
@@ -71,7 +73,7 @@ public class LevelController : Timer
         
     }
     public void LoadLevel(int level_number){
-        Debug.Log("************ LOAD LEVEL Called at: "+ Time.deltaTime + " | Level? " + level_number);
+       Debug.Log("************ LEVEL :"+ level_number +" .........  " + Time.deltaTime);
        current_level = level_number;
         switch (level_number)
         {
@@ -80,35 +82,50 @@ public class LevelController : Timer
                 desdination = "Drive to Upper East Side Warehouse";
                 GameController.messages_list = getMessageListFromLevel(level_number);
                 GameController.new_msg = true;
-                Timer.timeValue = 60;                       // Set timer for this Level
+                timeValue = 120;                       // Set timer for this Level
                 money = 100.00f;
                 wallet.text = "$ " + money.ToString("F2");
-
-                print(" Prime LEVEL: " + level_number);
+                
+               
+                
                 break;
 
             case 2:
-                print("Second LEVEL: " + level_number);
-                GameObject existingObject = GameObject.FindWithTag("Player");
-                if (existingObject != null)   Destroy(existingObject);
-    
-                Instantiate(player_prefab, startpoint_l2.transform.position, startpoint_l2.transform.rotation);
-
+             GameObject timerText = GameObject.FindWithTag("Timer");
+                GameObject milliText = GameObject.FindWithTag("Milliseconds");
+              Debug.Log("************ LEVEL :"+ level_number +" .........  MOney/Payment" + money +"/"+payment);
                 CalculateProgress();
                 payment = Random.Range(20, 75);
                 desdination = "West Warehouse in Downtown";
                
                 Timer.timeValue = 60;                       // Set timer for this Level
-                wallet.text = "$ " +money.ToString("F2");
+                Timer._delivery_completed = false;
+                
+                wallet.text = "$"+money.ToString("F2");
                 
             break;
             default:
-                //current_level = 1;
+                
             break;
         }
     }
 
+    public void SaveMoney(){
+        PlayerPrefs.SetFloat("money", money);
+        PlayerPrefs.SetFloat("payment", payment);
+        PlayerPrefs.Save();
 
+    }
+    public void LoadMoney(){
+        if (PlayerPrefs.HasKey("money"))
+        {
+            money = PlayerPrefs.GetFloat("money");
+        }
+        if (PlayerPrefs.HasKey("payment"))
+        {
+            payment = PlayerPrefs.GetFloat("payment");
+        }
+    }
     
     void CalculateProgress(){
         money += payment;
@@ -117,10 +134,16 @@ public class LevelController : Timer
     public void NextLevel(){
         if (current_level + 1 <= total_levels ){
             current_level++;
+            // Reload scene so the GameController will call the LoadLevel()
+            SaveMoney();
+            SceneManager.LoadScene("LevelLoader", LoadSceneMode.Additive);
+            Debug.Log("Scene Reloaded");
+            
+        
         }else if(current_level >= total_levels){
             Debug.Log("Thanks for playing Destiny Delivered!");
         }
-        LoadLevel(current_level);
+       
     }
 
  

@@ -22,11 +22,20 @@ public class GameController : LevelController
     private bool activateScore = false;
     private int currentMessageIndex = 0;
     bool welcome = true;
-    
+    private int level = 1;
     private void Start() {
-        this.StartGame();
+        this.LoadMoney();
+        Debug.Log(" LOADING money: " + money);
+        if(current_level == 0){
+            this.StartGame( level );
+        }else{
+            this.LoadLevel(current_level);
+        }
+        
+      
     }
    
+  
     void Update()
     {
         if(current_level == 1 && welcome){
@@ -58,6 +67,10 @@ public class GameController : LevelController
                 ClearMessage();
             }
         }
+
+       
+        
+     
     }
 
     public void ShowMessage(string message){

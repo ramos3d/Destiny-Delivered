@@ -7,6 +7,7 @@ public class Timer : MonoBehaviour
 {
     public TMP_Text timerText;
     public TMP_Text milliText;
+
     [Header("Time in seconds")]
     public static float timeValue = 0;
     public float milliseconds;
@@ -15,9 +16,9 @@ public class Timer : MonoBehaviour
     void Update()
     {
         if(_delivery_completed) {
-            timerText.color = Color.green;
-            milliText.color = Color.green;
-            return;
+        timerText.color = Color.green;
+        milliText.color = Color.green;
+        return;
         }
         RunTimer();
     }
