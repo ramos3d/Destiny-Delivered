@@ -8,10 +8,10 @@ public class NPCHelicopter : MonoBehaviour
     public float _velocity = 2000f;
     public Transform path;
     private List<Transform> nodes;
-    private int currentNode = 0;
+    //private int currentNode = 0;
 
-    public float currentSpeed = 0.5f;
-    public float maxSpeed = 2.0f;
+    //public float currentSpeed = 0.5f;
+    //public float maxSpeed = 2.0f;
     public bool move = false;
 
     Vector3 limit = new Vector3(0, 1, 1);

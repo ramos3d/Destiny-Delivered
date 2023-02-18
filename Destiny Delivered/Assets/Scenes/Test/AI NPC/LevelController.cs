@@ -5,107 +5,62 @@ using TMPro;
 using UnityEngine.SceneManagement;
 public class LevelController : Timer
 {
+  
     private int total_levels = 5;
     //Player variables based on level
     public float payment ;         // Random.Rande(15, ?)
-    private string desdination = null;     
-    private float delivered_at = 0;
+    private string destination = null;     
     public float  money;
     public TMP_Text wallet;
-    private string message_to_player = null;
     public static int current_level = 0;
-    private string[] level1_msg;
-    private string[] level2_msg;
-    private string[] level3_msg;
-    private string[] level4_msg;
-    private string[] level5_msg;
-    
-    public GameObject startpoint_l2;
-    public GameObject player_prefab;
-
     public static bool[] level_control = new bool[]{true, false, false, false, false};
  
-
-
-    public LevelController(){
-        level1_msg = new string[]{
-            "Welcome Elonso, \n we have a first delivery to you. Please, take this package to the the North Warehouse.", 
-            "\n Be careful with the order or the client won't pay you! \n Good luck!" 
-            };
-        level2_msg = new string[]{
-            "Elonso, \n I have another work for you. Go to the Downtown for more details and take these orders with you. \n", 
-            "Drive safe!" 
-        };
-    }
-           
-
     public void StartGame(int level)
     {
         LoadLevel(level);
     }
 
-    public string[] getGameMessages(){
-        return level2_msg;
+    void DisplayBossMessage(string message){
+        TextMeshProUGUI boss_msg = GameObject.FindWithTag("Message").GetComponent<TextMeshProUGUI>();
+        boss_msg.text = message;
     }
-
-    public string[] getMessageListFromLevel(int level_number){
-        switch (level_number)
-        {
-            case 1:
-                return level1_msg;
-                break;
-            case 2:
-                return level2_msg;
-                break;
-            case 3:
-                return level3_msg;
-                break;
-            case 4:
-                return level4_msg;
-                break;
-            case 5:
-                return level5_msg;
-                break;
-            default:
-                return getGameMessages();
-                break;
-        }
-        
+    void DisplayPaymentValue(string payment){
+            TextMeshProUGUI payment_msg = GameObject.FindWithTag("Payment").GetComponent<TextMeshProUGUI>();
+            payment_msg.text ="$"+ payment;
     }
     public void LoadLevel(int level_number){
-       Debug.Log("************ LEVEL :"+ level_number +" .........  " + Time.deltaTime);
        current_level = level_number;
+
         switch (level_number)
         {
             case 1:
-                payment = Random.Range(15, 50);
-                desdination = "Drive to Upper East Side Warehouse";
-                GameController.messages_list = getMessageListFromLevel(level_number);
+                Timer._go = false;
                 GameController.new_msg = true;
-                timeValue = 120;                       // Set timer for this Level
+                GameController.msg = "Press ENTER when you are ready!";
+                timeValue = 120;                                                                                    // Set timer for this Level
                 money = 100.00f;
-                wallet.text = "$ " + money.ToString("F2");
-                
-               
-                
-                break;
+                wallet.text = "$" + money.ToString("F2");
 
+                payment = Random.Range(15, 50);
+                destination = "Welcome Elonzo,\n\n- As your first day, drop this box at East Warehouse Base!";
+                DisplayBossMessage(destination);
+                DisplayPaymentValue(payment.ToString("F2"));
+                break;
             case 2:
-             GameObject timerText = GameObject.FindWithTag("Timer");
-                GameObject milliText = GameObject.FindWithTag("Milliseconds");
-              Debug.Log("************ LEVEL :"+ level_number +" .........  MOney/Payment" + money +"/"+payment);
+                Timer._go = false;
+                GameController.new_msg = true;
+                GameController.msg = "Press ENTER when you are ready!";
                 CalculateProgress();
-                payment = Random.Range(20, 75);
-                desdination = "West Warehouse in Downtown";
-               
-                Timer.timeValue = 60;                       // Set timer for this Level
-                Timer._delivery_completed = false;
-                
+                Timer.timeValue = 60;                                                                               
+                //Timer._delivery_completed = false;
                 wallet.text = "$"+money.ToString("F2");
-                
+
+                payment = Random.Range(20, 75);
+                destination = "New Order\n\n- Go to the West Warehouse\n in Downtown. \n - M : See the map";
+                DisplayBossMessage(destination);
+                DisplayPaymentValue(payment.ToString("F2"));
             break;
             default:
-                
             break;
         }
     }
@@ -138,13 +93,8 @@ public class LevelController : Timer
             SaveMoney();
             SceneManager.LoadScene("LevelLoader", LoadSceneMode.Additive);
             Debug.Log("Scene Reloaded");
-            
-        
         }else if(current_level >= total_levels){
             Debug.Log("Thanks for playing Destiny Delivered!");
         }
-       
     }
-
- 
 }

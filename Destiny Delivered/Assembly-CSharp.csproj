@@ -44,6 +44,7 @@
      <Compile Include="Assets\Scenes\Test\AI NPC\NPCWheels.cs" />
      <Compile Include="Assets\Scripts\AICarNPC.cs" />
      <Compile Include="Assets\Scenes\Test\AI NPC\LevelController.cs" />
+     <Compile Include="Assets\Scripts\LevelLoader.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />
      <Compile Include="Assets\Scenes\Test\AI NPC\Path.cs" />
      <Compile Include="Assets\Scenes\Test\AI NPC\NPCHelicopter.cs" />
@@ -51,7 +52,7 @@
      <Compile Include="Assets\Scripts\Garage.cs" />
      <Compile Include="Assets\Scenes\Test\AI NPC\CarSelfDrive.cs" />
      <Compile Include="Assets\Scenes\Test\AI NPC\CheckPoint.cs" />
-     <Compile Include="Assets\Scripts\LevelLoader.cs" />
+     <Compile Include="Assets\Scripts\HealthBar.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

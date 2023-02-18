@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class PlayerCar : Cars
 {
+    [SerializeField] HealthBar health_bar;
+    private readonly float damage = 1 ;
     public float new_axi = -0.9f;
        
     private void Start() {
-        // Prevent car flipping over
-        gameObject.GetComponent<Rigidbody>().centerOfMass = new Vector3(0,new_axi, 0);
+        gameObject.GetComponent<Rigidbody>().centerOfMass = new Vector3(0,new_axi, 0);  // Prevent car flipping over
     }
 
     private void FixedUpdate() {
@@ -17,22 +18,25 @@ public class PlayerCar : Cars
     }
 
     private void Update(){
-        AnimateWheels();
-        GetInputs();
-
-        // RESPAWN FOR TESST PURPOSE
-        if(Input.GetKeyDown("space")){
-            var _player = GameObject.FindGameObjectWithTag("Player");
-            //var _package = GameObject.Find("Paper_Pack"); // Finding by name
-            this.current_break_force = 3000000000000000f;    
-            var _respawn = GameObject.FindGameObjectWithTag("Respawn");
-            _player.transform.position = _respawn.transform.position;
-            _player.transform.rotation = _respawn.transform.rotation;
+        if(Timer._go == true)
+        {
+            AnimateWheels();
+            GetInputs();
+            // Damage test
+            if(Input.GetKeyDown("space"))
+            {
+                PlayerDamage();
+            }
         }
+    }
+
+    private void PlayerDamage(){
+        float new_energy = health_bar.GetCurrentHealth() - damage;
+        health_bar.SetHealth((int)new_energy);
     }
 
     private void LateUpdate() {
         Move(); 
-        Turn();             // To turn the wheel model
+        Turn();
     }
 }

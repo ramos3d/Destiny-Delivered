@@ -12,15 +12,40 @@ public class Timer : MonoBehaviour
     public static float timeValue = 0;
     public float milliseconds;
     public static bool _delivery_completed = false;
+    public static bool _go = false;
+    public static bool _time_over = false;
 
+private void Start() {
+    _delivery_completed = false;
+    _go = false;
+    _time_over = false;
+}
     void Update()
     {
-        if(_delivery_completed) {
-        timerText.color = Color.green;
-        milliText.color = Color.green;
-        return;
+        if(!_go) // Dont start yet.
+        {
+            DisplayTime(timeValue);
+            return;
         }
-        RunTimer();
+
+        if(_delivery_completed) 
+        {
+            timerText.color = Color.green;
+            milliText.color = Color.green;
+            DisplayTime(timeValue);
+            return;
+        }
+        if (_time_over)
+        {
+            timerText.color = Color.red;
+            milliText.color = Color.red;
+            DisplayTime(timeValue);
+            return;
+        }
+        if (!_time_over)
+        {
+            RunTimer();
+        }
     }
 
     
@@ -29,6 +54,7 @@ public class Timer : MonoBehaviour
             timeValue -= Time.deltaTime;   
         }else{
             timeValue = 0;
+            _time_over = true;
         }
         DisplayTime(timeValue);
     }
@@ -37,12 +63,11 @@ public class Timer : MonoBehaviour
         if(timeToDisplay < 0){
             timeToDisplay = 0;
         }
-        string minutes = Mathf.FloorToInt(timeToDisplay/60).ToString();
-        string seconds = Mathf.FloorToInt(timeToDisplay % 60).ToString();
+        string minutes = Mathf.FloorToInt(timeToDisplay/60).ToString("D2");
+        string seconds = Mathf.FloorToInt(timeToDisplay % 60).ToString("D2");
         milliseconds = (int)((timeValue * 1000) % 1000);
-     
-        timerText.text =  "0" + string.Format("{0:00}:{1:00}", minutes, seconds);
-        milliText.text = string.Format("{0:00}", milliseconds).Substring(1);
+        timerText.text = minutes +":"+ seconds;
+        milliText.text = milliseconds.ToString().Substring(1);
 
         if (timeToDisplay == 0){
              timerText.text = "00:00";
