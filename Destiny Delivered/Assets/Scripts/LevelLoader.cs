@@ -12,9 +12,14 @@ public class LevelLoader : LevelController
     void Start()
     {
         next_level = LevelController.current_level; // This current_level comes already added to +1
-        
-        StartCoroutine(Load( next_level));
-        Debug.Log("Scene LevelLoader says: next level will be --> " + next_level);
+        if (next_level == 1)
+        {
+            SceneManager.LoadScene("AI NPC");
+        }else{
+
+            StartCoroutine(Load( next_level));
+            Debug.Log("Scene LevelLoader says: next level will be --> " + next_level);
+        }
     }
 
      IEnumerator Load(int level_number)

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerCar : Cars
 {
-    [SerializeField] HealthBar health_bar;
+    [SerializeField] public HealthBar health_bar;
     private readonly float damage = 1 ;
     public float new_axi = -0.9f;
        
@@ -25,7 +25,7 @@ public class PlayerCar : Cars
         }
 
         
-        if (health_bar.GetCurrentHealth() <= 9)
+        if (health_bar.GetCurrentHealth() <= 0)
         {
             GameController.game_state = false;
             return;

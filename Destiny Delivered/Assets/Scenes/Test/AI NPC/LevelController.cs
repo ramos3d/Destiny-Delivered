@@ -13,7 +13,7 @@ public class LevelController : Timer
     public float  money;
     public TMP_Text wallet;
     public static int current_level = 1;
-    public static bool[] level_control = new bool[]{false, false, false, false, false,             false};
+    public static bool[] level_control = new bool[]{false, false, false, false, false, false};
     private  GameObject star;
     private int nextLevel;
 

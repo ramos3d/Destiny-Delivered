@@ -16,6 +16,7 @@ public class GameController : LevelController
     public static string msg;
     public static bool new_msg = false; 
     private bool isPaused = true;
+    
     public static  bool isLv2 = false;
     public static bool isLv3 = false;
     public static bool isLv4 = false;
@@ -24,10 +25,11 @@ public class GameController : LevelController
     private bool counter = true;
     private GameObject check_point;
     private string[] checkpoint_list = {"Checkpoint_1", "Checkpoint_2", "Checkpoint_3", "Checkpoint_4", "Checkpoint_5"};
+    //[SerializeField] public GameObject[]  checkpoints_objs;
     
     private void Start() {
         Debug.Log (" START GC  *** " + current_level);
-            
+
         if ( LevelLoader.next_level == 2 && isLv2 == false)
         {
             isLv2 = true;
@@ -121,9 +123,11 @@ public class GameController : LevelController
                 this.LoadLevel( current_level );
 
                 // Make Checkpoint visible
+                int index = 0;
                 foreach (var item in checkpoint_list)
                 {
                     check_point  = GameObject.FindWithTag(item);
+                 
                     if (item != "Checkpoint_1")
                     {
                         check_point.SetActive(false);
@@ -175,14 +179,63 @@ public class GameController : LevelController
     }
 
     public void RestartGame(){
-        Debug.Log("RESTART EXECUTED");
+        
+        
         this.LoadLevel(1);
+        game_state = true;
+        UI_GAME_OVER.SetActive(false);
+        ResetAllVariables();
+        
+        SceneManager.LoadScene("LevelLoader");
+        
+    }
+    public void LoadMenu(){
+       
+        ResetAllVariables();
+        SceneManager.LoadScene("Menu");
     }
     void GameOver(){
         new_msg = false;
         msg = "";
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         UI_GAME_OVER.SetActive(true);
        // PauseGame ();
     }
+
+    void ResetAllVariables(){
+         
+        Timer._go = false;
+        
+        game_state = true;
+        current_level = 1;
+        LevelController.current_level = current_level;
+        LevelLoader.next_level = current_level;
+        money = 100;
+        this.SaveMoney();
+        for (int i = 0; i < LevelController.level_control.Length; i++)
+        {
+            LevelController.level_control[current_level] = false;
+        }
+        
+        isLv2 = false;
+        isLv3 = false;
+        isLv4 = false;
+        isLv5 = false;
+        
+        // Enable all checkpoints back
+       /* int index = 0;
+        foreach (var item in checkpoint_list)
+        {
+            check_point  = GameObject.FindWithTag(item);
+            if (check_point == null)
+            {
+                check_point = checkpoints_objs[index];
+                index++;
+            }
+  
+            check_point.SetActive(true);
+        }*/
+
+    }
+    
 }
