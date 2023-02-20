@@ -15,7 +15,6 @@ public class GPSAnimator : MonoBehaviour
     private void Start() {
         gps_icon = GameObject.FindWithTag("GPS_icon");
         current_position.y = gps_icon.transform.position.y;
-        
     }
     private void FixedUpdate() {
         gps_icon.transform.Rotate(0, 0, speed * Time.deltaTime);
@@ -39,13 +38,11 @@ public class GPSAnimator : MonoBehaviour
         }
     }
     
-    // Destroy GPS Location Icon
+    // Deactivate GPS Location Icon
     private void OnTriggerEnter(Collider other) {
         if (other.GetComponent<Collider>().tag== "Player")
         {
-           // Debug.Log(" Delete The GPS");
-            Destroy(gameObject);
-            
+            gameObject.SetActive(false);
         }
     }
 }

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameController : LevelController
 {
+  
     [SerializeField] private GameObject UI_GAME_OVER;
     [SerializeField] public GameObject UI_RESULTS;
     [Header("Config messages:")]
@@ -18,6 +20,10 @@ public class GameController : LevelController
     public static bool isLv3 = false;
     public static bool isLv4 = false;
     public static bool isLv5 = false;
+    public static bool game_state = true;
+    private bool counter = true;
+    private GameObject check_point;
+    private string[] checkpoint_list = {"Checkpoint_1", "Checkpoint_2", "Checkpoint_3", "Checkpoint_4", "Checkpoint_5"};
     
     private void Start() {
         Debug.Log (" START GC  *** " + current_level);
@@ -27,57 +33,112 @@ public class GameController : LevelController
             isLv2 = true;
             LoadLevel(LevelLoader.next_level);
             Debug.Log (" LOADED LV2  ->" + current_level);
+            // Make Checkpoint visible
+            foreach (var item in checkpoint_list)
+            {
+                check_point  = GameObject.FindWithTag(item);
+                if (item != "Checkpoint_2")
+                {
+                    check_point.SetActive(false);
+                }
+            }
         }
         if ( LevelLoader.next_level == 3 && isLv3 == false)
         {
             isLv3 = true;
             LoadLevel(LevelLoader.next_level);
             Debug.Log (" LOADED LV3  ->" + current_level);
+            // Make Checkpoint visible
+            foreach (var item in checkpoint_list)
+            {
+                check_point  = GameObject.FindWithTag(item);
+                if (item != "Checkpoint_3")
+                {
+                    check_point.SetActive(false);
+                }
+            }
         }
         if ( LevelLoader.next_level == 4 && isLv4 == false)
         {
             isLv4 = true;
             LoadLevel(LevelLoader.next_level);
             Debug.Log (" LOADED LV4  ->" + current_level);
+            // Make Checkpoint visible
+            foreach (var item in checkpoint_list)
+            {
+                check_point  = GameObject.FindWithTag(item);
+                if (item != "Checkpoint_4")
+                {
+                    check_point.SetActive(false);
+                }
+            }
         }
         if ( LevelLoader.next_level == 5 && isLv5 == false)
         {
             isLv5 = true;
             LoadLevel(LevelLoader.next_level);
             Debug.Log (" CLOADED LV5 - LAST ONE  ->" + current_level);
+            // Make Checkpoint visible
+            foreach (var item in checkpoint_list)
+            {
+                check_point  = GameObject.FindWithTag(item);
+                if (item != "Checkpoint_5")
+                {
+                    check_point.SetActive(false);
+                }
+            }
         }
-    
-        
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return)){
-            if (isPaused == true)
+        if(game_state) {
+            if (Input.GetKeyDown(KeyCode.Return)){
+                if (isPaused == true)
+                {
+                    ClearMessage();
+                    Timer._go = true;
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.P) && Timer._go ){
+                
+                if (isPaused) 
+                {
+                    PauseGame();
+                    isPaused = false;
+                }else{
+                    isPaused = true;
+                    ResumeGame();
+                }
+            }
+            if (new_msg)
             {
-                ClearMessage();
-                Timer._go = true;
+                ShowMessage(msg);
+            }
+            this.LoadMoney();
+            if(current_level == 1 && LevelController.level_control[current_level] == false){
+                Debug.Log ("START The GAME CONTROLLER  SAYS: hey LV ->" + current_level);
+                LevelController.level_control[current_level] = true;
+                this.LoadLevel( current_level );
+
+                // Make Checkpoint visible
+                foreach (var item in checkpoint_list)
+                {
+                    check_point  = GameObject.FindWithTag(item);
+                    if (item != "Checkpoint_1")
+                    {
+                        check_point.SetActive(false);
+                    }
+                }
             }
         }
-        if (Input.GetKeyDown(KeyCode.P) && Timer._go ){
-            
-            if (isPaused) 
-            {
-                PauseGame();
-                isPaused = false;
-            }else{
-                isPaused = true;
-                ResumeGame();
-            }
-        }
-        if (new_msg)
+       
+
+        if (game_state == false)
         {
-            ShowMessage(msg);
-        }
-        this.LoadMoney();
-        if(current_level == 1 && LevelController.level_control[current_level] == false){
-            Debug.Log ("START The GAME CONTROLLER  SAYS: hey LV ->" + current_level);
-            LevelController.level_control[current_level] = true;
-            this.LoadLevel( current_level );
+            if(counter == true){
+                GameOver();
+                counter = false;
+            }
         }
     }
 
@@ -113,11 +174,15 @@ public class GameController : LevelController
         Time.timeScale = 1;
     }
 
-    void RestartGame(){
+    public void RestartGame(){
+        Debug.Log("RESTART EXECUTED");
         this.LoadLevel(1);
     }
     void GameOver(){
-        UI_GAME_OVER.SetActive(!UI_GAME_OVER.activeSelf);
-        PauseGame ();
+        new_msg = false;
+        msg = "";
+        Time.timeScale = 0;
+        UI_GAME_OVER.SetActive(true);
+       // PauseGame ();
     }
 }

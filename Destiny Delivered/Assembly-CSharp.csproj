@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scenes\Test\AI NPC\NPCHelicopter.cs" />
      <Compile Include="Assets\Scripts\PlayerCar.cs" />
      <Compile Include="Assets\Scripts\Garage.cs" />
+     <Compile Include="Assets\Scripts\PackDamage.cs" />
      <Compile Include="Assets\Scenes\Test\AI NPC\CarSelfDrive.cs" />
      <Compile Include="Assets\Scenes\Test\AI NPC\CheckPoint.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
