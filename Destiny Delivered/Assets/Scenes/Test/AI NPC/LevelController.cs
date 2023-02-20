@@ -12,25 +12,17 @@ public class LevelController : Timer
     private string destination = null;     
     public float  money;
     public TMP_Text wallet;
-    public static int current_level = 0;
-    public static bool[] level_control = new bool[]{true, false, false, false, false};
- 
-    public void StartGame(int level)
-    {
-        LoadLevel(level);
-    }
+    public static int current_level = 1;
+    public static bool[] level_control = new bool[]{false, false, false, false, false,             false};
+    private  GameObject star;
+    private int nextLevel;
 
-    void DisplayBossMessage(string message){
-        TextMeshProUGUI boss_msg = GameObject.FindWithTag("Message").GetComponent<TextMeshProUGUI>();
-        boss_msg.text = message;
-    }
-    void DisplayPaymentValue(string payment){
-            TextMeshProUGUI payment_msg = GameObject.FindWithTag("Payment").GetComponent<TextMeshProUGUI>();
-            payment_msg.text ="$"+ payment;
-    }
+  
+
     public void LoadLevel(int level_number){
-       current_level = level_number;
-
+        LoadMoney();
+        current_level = level_number;
+        nextLevel = current_level + 1;
         switch (level_number)
         {
             case 1:
@@ -42,34 +34,83 @@ public class LevelController : Timer
                 wallet.text = "$" + money.ToString("F2");
 
                 payment = Random.Range(15, 50);
-                destination = "Welcome Elonzo,\n\n- As your first day, drop this box at East Warehouse Base!";
+                destination = "1. Welcome Elonzo,\n\n- As your first day, drop this box at East Warehouse Base!";
                 DisplayBossMessage(destination);
                 DisplayPaymentValue(payment.ToString("F2"));
+                SaveMoney();
                 break;
             case 2:
-                Timer._go = false;
-                GameController.new_msg = true;
-                GameController.msg = "Press ENTER when you are ready!";
-                CalculateProgress();
-                Timer.timeValue = 60;                                                                               
-                //Timer._delivery_completed = false;
-                wallet.text = "$"+money.ToString("F2");
+                star = GameObject.FindGameObjectWithTag("Star2");
+                destination = "2. New Order:\n\n- Go to the West Warehouse in Downtown.";
+                SetVariablesToThisLevel(level_number, destination, star);
+                //Debug.Log(" ------------------------------------------------------------------- money: "  + money);
+            break;
+            case 3:
+                star = GameObject.FindGameObjectWithTag("Star2");
+                star.SetActive(false);
+                star = GameObject.FindGameObjectWithTag("Star3");
+                destination = "3. New Order:\n\n- I need you go to the south store and get dop another pack there. Be careful this time!";
+                SetVariablesToThisLevel(level_number, destination, star);
+            break;
+            case 4:
+                star = GameObject.FindGameObjectWithTag("Star2");
+                star.SetActive(false);
+                star = GameObject.FindGameObjectWithTag("Star3");
+                star.SetActive(false);
+                star = GameObject.FindGameObjectWithTag("Star4");
+                star.SetActive(false);
 
-                payment = Random.Range(20, 75);
-                destination = "New Order\n\n- Go to the West Warehouse\n in Downtown. \n - M : See the map";
-                DisplayBossMessage(destination);
-                DisplayPaymentValue(payment.ToString("F2"));
+                destination = "4. New Order:\n\n- Go the the West now and drop this equipment!";
+                SetVariablesToThisLevel(level_number, destination, star);
+            break;
+            case 5:
+                star = GameObject.FindGameObjectWithTag("Star2");
+                star.SetActive(false);
+                star = GameObject.FindGameObjectWithTag("Star3");
+                star.SetActive(false);
+                star = GameObject.FindGameObjectWithTag("Star4");
+                star.SetActive(false);
+                star = GameObject.FindGameObjectWithTag("Star5");
+                destination = "5. New Order:\n\n- Drive to the West Arena and drop it there ASAP!";
+                SetVariablesToThisLevel(level_number, destination, star);
             break;
             default:
+                // LOAD THE CREDITS AND GAME OVER ... THEN REDIRECT TO MENU
             break;
         }
+    }
+
+    void SetVariablesToThisLevel(int level, string destination, GameObject star){
+        if (star != null){
+            star.SetActive(false);
+        }  
+
+        Timer._go = false;
+        GameController.new_msg = true;
+        GameController.msg = "Press ENTER when you are ready! \n Level: "+current_level;
+        CalculateProgress();
+        Timer.timeValue = 60;                                                                               
+        wallet.text = "$"+money.ToString("F2");
+        payment = Random.Range(20, 75);
+        DisplayBossMessage(destination);
+        DisplayPaymentValue(payment.ToString("F2"));
+        //Debug.Log("Level: "+level+ " - Payment for this job: "+ payment);
+        SaveMoney();
+    }
+
+    void DisplayBossMessage(string message){
+        TextMeshProUGUI boss_msg = GameObject.FindWithTag("Message").GetComponent<TextMeshProUGUI>();
+        boss_msg.text = message;
+    }
+    void DisplayPaymentValue(string payment){
+        TextMeshProUGUI payment_msg = GameObject.FindWithTag("Payment").GetComponent<TextMeshProUGUI>();
+        payment_msg.text ="$"+ payment;
     }
 
     public void SaveMoney(){
         PlayerPrefs.SetFloat("money", money);
         PlayerPrefs.SetFloat("payment", payment);
         PlayerPrefs.Save();
-
     }
     public void LoadMoney(){
         if (PlayerPrefs.HasKey("money"))
@@ -87,14 +128,17 @@ public class LevelController : Timer
     }
 
     public void NextLevel(){
-        if (current_level + 1 <= total_levels ){
-            current_level++;
+        if (current_level + 1 <= total_levels){
+            level_control[current_level] = true;
+            current_level ++;
             // Reload scene so the GameController will call the LoadLevel()
             SaveMoney();
             SceneManager.LoadScene("LevelLoader", LoadSceneMode.Additive);
             Debug.Log("Scene Reloaded");
         }else if(current_level >= total_levels){
             Debug.Log("Thanks for playing Destiny Delivered!");
+        }else{
+            Debug.Log("Level atual retornou >>>>>> "+ level_control[current_level] + " | na position: "+ current_level);
         }
     }
 }

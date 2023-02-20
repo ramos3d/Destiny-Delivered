@@ -13,18 +13,42 @@ public class GameController : LevelController
     public TMP_Text mission_messageText;
     public static string msg;
     public static bool new_msg = false; 
-    private int level = 1;
     private bool isPaused = true;
-       
+    public static  bool isLv2 = false;
+    public static bool isLv3 = false;
+    public static bool isLv4 = false;
+    public static bool isLv5 = false;
+    
     private void Start() {
-        this.LoadMoney();
-        if(current_level == 0){
-            this.StartGame( level );
-        }else{
-            this.LoadLevel(current_level);
+        Debug.Log (" START GC  *** " + current_level);
+            
+        if ( LevelLoader.next_level == 2 && isLv2 == false)
+        {
+            isLv2 = true;
+            LoadLevel(LevelLoader.next_level);
+            Debug.Log (" LOADED LV2  ->" + current_level);
         }
+        if ( LevelLoader.next_level == 3 && isLv3 == false)
+        {
+            isLv3 = true;
+            LoadLevel(LevelLoader.next_level);
+            Debug.Log (" LOADED LV3  ->" + current_level);
+        }
+        if ( LevelLoader.next_level == 4 && isLv4 == false)
+        {
+            isLv4 = true;
+            LoadLevel(LevelLoader.next_level);
+            Debug.Log (" LOADED LV4  ->" + current_level);
+        }
+        if ( LevelLoader.next_level == 5 && isLv5 == false)
+        {
+            isLv5 = true;
+            LoadLevel(LevelLoader.next_level);
+            Debug.Log (" CLOADED LV5 - LAST ONE  ->" + current_level);
+        }
+    
+        
     }
-  
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return)){
@@ -34,7 +58,6 @@ public class GameController : LevelController
                 Timer._go = true;
             }
         }
-
         if (Input.GetKeyDown(KeyCode.P) && Timer._go ){
             
             if (isPaused) 
@@ -46,10 +69,15 @@ public class GameController : LevelController
                 ResumeGame();
             }
         }
-
         if (new_msg)
         {
             ShowMessage(msg);
+        }
+        this.LoadMoney();
+        if(current_level == 1 && LevelController.level_control[current_level] == false){
+            Debug.Log ("START The GAME CONTROLLER  SAYS: hey LV ->" + current_level);
+            LevelController.level_control[current_level] = true;
+            this.LoadLevel( current_level );
         }
     }
 
@@ -66,10 +94,13 @@ public class GameController : LevelController
         mission_messageText.text = "";
         new_msg = false;
     }
-        void DisplayScore(){
-            UI_RESULTS.SetActive(!UI_RESULTS.activeSelf);
-           
-        }
+    public void DisplayScore(){
+        TextMeshProUGUI finaltime = GameObject.Find("Final_time").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI earned = GameObject.Find("Earned_cash").GetComponent<TextMeshProUGUI>();
+        earned.color = Color.green;
+        finaltime.text = "Time: " + this.timerText.text;
+        earned.text = "$" + this.payment.ToString("F2");
+    }
     void PauseGame ()
     {
         ShowMessage("PAUSED");

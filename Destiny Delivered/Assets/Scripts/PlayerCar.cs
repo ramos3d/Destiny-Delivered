@@ -30,6 +30,13 @@ public class PlayerCar : Cars
         }
     }
 
+    private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.tag != "Player" && other.gameObject.tag != "BreakLight")
+        {
+            PlayerDamage();
+        }
+    }
+        
     private void PlayerDamage(){
         float new_energy = health_bar.GetCurrentHealth() - damage;
         health_bar.SetHealth((int)new_energy);

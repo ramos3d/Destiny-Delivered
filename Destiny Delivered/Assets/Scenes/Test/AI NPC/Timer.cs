@@ -15,11 +15,11 @@ public class Timer : MonoBehaviour
     public static bool _go = false;
     public static bool _time_over = false;
 
-private void Start() {
-    _delivery_completed = false;
-    _go = false;
-    _time_over = false;
-}
+    private void Start() {
+        _delivery_completed = false;
+        _go = false;
+        _time_over = false;
+    }
     void Update()
     {
         if(!_go) // Dont start yet.
@@ -66,8 +66,13 @@ private void Start() {
         string minutes = Mathf.FloorToInt(timeToDisplay/60).ToString("D2");
         string seconds = Mathf.FloorToInt(timeToDisplay % 60).ToString("D2");
         milliseconds = (int)((timeValue * 1000) % 1000);
-        timerText.text = minutes +":"+ seconds;
-        milliText.text = milliseconds.ToString().Substring(1);
+        
+        if(timerText != null && milliText !=null){
+            timerText.text = minutes +":"+ seconds;
+            milliText.text = milliseconds.ToString().Substring(1);
+            
+           
+        }
 
         if (timeToDisplay == 0){
              timerText.text = "00:00";

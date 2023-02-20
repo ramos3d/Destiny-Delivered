@@ -3,35 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelLoader : MonoBehaviour
+public class LevelLoader : LevelController
 {
-    private int current_level;
-    private int seconds = 3;
+    public static int next_level;
+    private int seconds = 2;
 
     // Start is called before the first frame update
     void Start()
     {
-        current_level = LevelController.current_level; // This current_level comes already added to +1
-        StartCoroutine(Load( current_level));
-        Debug.Log("Scene LevelLoader says: next level will be --> " + current_level);
+        next_level = LevelController.current_level; // This current_level comes already added to +1
+        
+        StartCoroutine(Load( next_level));
+        Debug.Log("Scene LevelLoader says: next level will be --> " + next_level);
     }
 
      IEnumerator Load(int level_number)
     {
         yield return new WaitForSeconds(seconds); // Wait for x seconds;
-
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("AI NPC", LoadSceneMode.Single); 
-        //AsyncOperation asyncOperation = SceneManager.LoadScene("AI NPC");
-        asyncOperation.allowSceneActivation = false; // Prevents the scene from activating immediately.
-
-        while (!asyncOperation.isDone)
-        {
-            if (asyncOperation.progress >= 0.9f)
-            {
-                asyncOperation.allowSceneActivation = true; // Activate scene when it is ready
-            }
-
-            yield return null;
-        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

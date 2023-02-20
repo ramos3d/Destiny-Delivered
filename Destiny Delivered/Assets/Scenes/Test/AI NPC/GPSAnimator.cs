@@ -43,7 +43,7 @@ public class GPSAnimator : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.GetComponent<Collider>().tag== "Player")
         {
-            Debug.Log(" Delete The GPS");
+           // Debug.Log(" Delete The GPS");
             Destroy(gameObject);
             
         }
