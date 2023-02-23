@@ -8,12 +8,13 @@ public class PlayerCar : Cars
     [SerializeField] public HealthBar health_bar;
     private readonly float damage = 1 ;
     public float new_axi = -0.9f;
-       
+           
     private void Start() {
         gameObject.GetComponent<Rigidbody>().centerOfMass = new Vector3(0,new_axi, 0);  // Prevent car flipping over
     }
 
     private void FixedUpdate() {
+        Move(); 
         Break();
     }
 
@@ -23,19 +24,17 @@ public class PlayerCar : Cars
             AnimateWheels();
             GetInputs();
         }
-
-        
+       
         if (health_bar.GetCurrentHealth() <= 0)
         {
             GameController.game_state = false;
-            return;
         }
     }
 
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag != "Player" && other.gameObject.tag != "BreakLight")
         {
-            PlayerDamage();
+            PlayerDamage(); 
         }
     }
         
@@ -45,7 +44,11 @@ public class PlayerCar : Cars
     }
 
     private void LateUpdate() {
-        Move(); 
+      
+      
+        
         Turn();
     }
+
+    
 }

@@ -27,9 +27,12 @@ public class GameController : LevelController
     private string[] checkpoint_list = {"Checkpoint_1", "Checkpoint_2", "Checkpoint_3", "Checkpoint_4", "Checkpoint_5"};
     //[SerializeField] public GameObject[]  checkpoints_objs;
     
+    private void Awake() {
+        game_state = true;
+    }
     private void Start() {
-        Debug.Log (" START GC  *** " + current_level);
-
+        //Debug.Log (" START GC  *** " + current_level);
+        
         if ( LevelLoader.next_level == 2 && isLv2 == false)
         {
             isLv2 = true;
@@ -79,7 +82,7 @@ public class GameController : LevelController
         {
             isLv5 = true;
             LoadLevel(LevelLoader.next_level);
-            Debug.Log (" CLOADED LV5 - LAST ONE  ->" + current_level);
+            Debug.Log (" LOADED LV5 - LAST ONE  ->" + current_level);
             // Make Checkpoint visible
             foreach (var item in checkpoint_list)
             {
@@ -128,7 +131,7 @@ public class GameController : LevelController
                 {
                     check_point  = GameObject.FindWithTag(item);
                  
-                    if (item != "Checkpoint_1")
+                    if (item != "Checkpoint_1" && item != null)
                     {
                         check_point.SetActive(false);
                     }
@@ -142,6 +145,7 @@ public class GameController : LevelController
             if(counter == true){
                 GameOver();
                 counter = false;
+                Time.timeScale = 0;
             }
         }
     }

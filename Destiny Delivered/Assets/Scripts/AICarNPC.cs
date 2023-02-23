@@ -96,25 +96,19 @@ public class AICarNPC : Cars
     public override void Break(){
          if(near == true){
             current_break_force = 50000f;
-            Debug.Log("Break ativado. Stoooooooop!");
         }else{
             current_break_force = 0f;
             Move();
         }
         foreach (var wheel in wheels)
         {
-            Debug.Log(" - Cada roda foi freada");
-           // current_break_force = 50000f;
             wheel.collider.brakeTorque = current_break_force * Time.deltaTime;
         }
     }
     
-
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(this.transform.position, Vector3.forward * 23.0f);
 
     }
-
-   
 }
