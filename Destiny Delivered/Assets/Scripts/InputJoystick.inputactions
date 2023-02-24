@@ -6,10 +6,10 @@
             "id": "9153f60b-7c2d-4694-a3b1-321d01c6ecbd",
             "actions": [
                 {
-                    "name": "Move",
-                    "type": "Value",
-                    "id": "ebb48106-454f-441b-a429-352c5d642ce0",
-                    "expectedControlType": "Stick",
+                    "name": "Break",
+                    "type": "Button",
+                    "id": "79fe2eec-eac9-4d8e-8488-8d7d891d1457",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -18,17 +18,23 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "6bc2e26a-4ecf-4adf-bfbd-89cd8a3920e8",
-                    "path": "<Gamepad>/leftStick",
+                    "id": "a7bffdac-d19f-40c8-ad70-d46705c160c9",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Move",
+                    "groups": "GamePad",
+                    "action": "Break",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "GamePad",
+            "bindingGroup": "GamePad",
+            "devices": []
+        }
+    ]
 }

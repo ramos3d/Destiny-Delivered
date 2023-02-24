@@ -9,51 +9,15 @@ using UnityEngine;
 public class AICarNPC : Cars
 {
     // Variables
-
     [SerializeField] private Boolean near;
 
 
   private void Start() {
-    // Move();
     near = false;
     StartCoroutine(Example());
   }
 
    
-    private void Update(){
-       
-       
-       /* AnimateWheels();
-        var origin = this.transform.position;
-        RaycastHit hit;
-       
-            if (Physics.Raycast(origin, Vector3.forward, out hit, 23.0f))
-            {
-                if (hit.collider.CompareTag("NPC"))
-                {
-                    near = true;
-                }else{
-                    near = false;
-                }
-                
-            }
-
-       if (near == true)
-        {
-            Debug.Log("There is a stopped car ahead");
-            Break();
-            near = false;
-        }
-        if (near == false){
-            Debug.Log(" Acelerate...");
-            Move();
-        }
-           
-       */
-       
-      
-    }
-
   IEnumerator Example()
     {
        
@@ -64,8 +28,6 @@ public class AICarNPC : Cars
    
    
     private void LateUpdate() {
-       
-       
         Turn();             // To turn the wheel model
     }
 

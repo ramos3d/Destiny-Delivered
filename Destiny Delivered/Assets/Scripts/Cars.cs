@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.InputSystem;
 public enum Axel
 {
     Front,
@@ -26,7 +26,7 @@ public class Cars : MonoBehaviour
     public float turnSensitivity = 1.0f;       // Level of sensitivity to response
     public float maxSteerAngle = 30.0f;
     public List<Wheel> wheels;
-    public float breaking_force = 30000f;
+    public float breaking_force = 30f;
     public float current_break_force = 0f;
     public float inputX, inputY;
   
@@ -35,20 +35,18 @@ public class Cars : MonoBehaviour
     public TMP_Text speedometerText;
 
     [SerializeField]private Rigidbody rb;
-    
+    public Gamepad gamepad = Gamepad.current;
 
     private void Start() {
         break_light = GameObject.FindWithTag("BreakLight");
         break_light.SetActive(false);
-
         rb = GetComponent<Rigidbody>();
-      
-        
     }
-     // Break the car
+     
+    
     public virtual void Break(){
-        
-        if(Input.GetKey(KeyCode.E)){
+        //if(Input.GetKey(KeyCode.E) ||   gamepad.aButton.wasPressedThisFrame){
+        if (Gamepad.current != null && Gamepad.current.buttonSouth.isPressed){
            current_break_force = breaking_force;
            break_light.SetActive(true);
         }else{
@@ -67,26 +65,18 @@ public class Cars : MonoBehaviour
         inputY = Input.GetAxis("Vertical");
     }
 
-   // Move the car via wheel colliders
     public virtual void Move(){
-    /*    foreach (var wheel in wheels)
-        {
-            //wheel.collider.motorTorque = inputY * maxAcceleration * 500 * Time.deltaTime;
-            wheel.collider.motorTorque = inputY * maxAcceleration * 900000 *  Time.deltaTime ;
-        }  
-*/
         
         if (inputY > 0)
         {
             if (rb.velocity.magnitude < maxAcceleration)
             {
                 float force = acceleration * inputY ;
-                wheels[0].collider.motorTorque = inputY * maxAcceleration * 100 * force  * Time.deltaTime;
-                wheels[1].collider.motorTorque = inputY * maxAcceleration * 100  * force * Time.deltaTime;
+                wheels[0].collider.motorTorque = inputY * maxAcceleration * 500 * force  * Time.deltaTime;
+                wheels[1].collider.motorTorque = inputY * maxAcceleration * 500  * force * Time.deltaTime;
                 wheels[2].collider.motorTorque = inputY * maxAcceleration * 500  * force * Time.deltaTime;
                 wheels[3].collider.motorTorque = inputY * maxAcceleration * 500  * force * Time.deltaTime;
                 rb.AddForce(transform.forward * force * Time.deltaTime);
-             
             }
 
         }  else if (inputY < 0f)
@@ -94,20 +84,20 @@ public class Cars : MonoBehaviour
             if (rb.velocity.magnitude > - maxAcceleration / 2f)
             {
                 float force = breaking_force * inputY ;
-                rb.AddForce(transform.forward * force * Time.deltaTime * 2);
-             
+                rb.AddForce(transform.forward * force * Time.deltaTime * 3);
             }
         }
-        current_speed = rb.velocity.magnitude; 
-        //Debug.Log(" VELOCITY:::::: "+ current_speed.ToString("F2"));
-        if (current_speed <0.2)
+        if (current_speed <0.25)
         {
             current_speed = 0;
         }
-        speedometerText.text = current_speed.ToString("F2"); 
-        
+           
     }
 
+    public void ShowSpeedometer(){
+        current_speed = rb.velocity.magnitude; 
+        speedometerText.text = current_speed.ToString("F2"); 
+    }
     void ControlMaxSteerAngleBasedOnVelocity(){
         if (current_speed <=5)
         {
