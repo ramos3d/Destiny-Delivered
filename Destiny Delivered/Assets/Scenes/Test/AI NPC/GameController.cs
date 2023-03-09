@@ -12,32 +12,29 @@ public class GameController : LevelController
     [SerializeField] public GameObject UI_RESULTS;
     [Header("Config messages:")]
     [SerializeField] public GameObject UI_MESSAGE;
+
+    public TMP_Text finaltime;
+    public TMP_Text earned;
+
     public TMP_Text mission_messageText;
+
     public static string msg;
-    public static bool new_msg = false; 
-    private bool isPaused = true;
-    
-    public static  bool isLv2 = false;
-    public static bool isLv3 = false;
-    public static bool isLv4 = false;
-    public static bool isLv5 = false;
+   
     public static bool game_state = true;
+
     private bool counter = true;
     private GameObject check_point;
-    private string[] checkpoint_list = {"Checkpoint_1", "Checkpoint_2", "Checkpoint_3", "Checkpoint_4", "Checkpoint_5"};
-    //[SerializeField] public GameObject[]  checkpoints_objs;
+    private string[] checkpoint_list = { "Checkpoint_1", "Checkpoint_2", "Checkpoint_3", "Checkpoint_4", "Checkpoint_5"};
     
-    private void Awake() {
-        game_state = true;
-    }
+ 
     private void Start() {
-        //Debug.Log (" START GC  *** " + current_level);
-        
-        if ( LevelLoader.next_level == 2 && isLv2 == false)
+       //  DontDestroyOnLoad(UI_RESULTS.gameObject);
+       
+        if ( GameManager.GetLevel() == 2 )
         {
-            isLv2 = true;
-            LoadLevel(LevelLoader.next_level);
-            Debug.Log (" LOADED LV2  ->" + current_level);
+            LoadLevel(GameManager.GetLevel());
+          
+            Debug.Log (" LOADED LV2  ->" + GameManager.GetLevel() );
             // Make Checkpoint visible
             foreach (var item in checkpoint_list)
             {
@@ -47,12 +44,13 @@ public class GameController : LevelController
                     check_point.SetActive(false);
                 }
             }
+            
         }
-        if ( LevelLoader.next_level == 3 && isLv3 == false)
+        if ( GameManager.GetLevel() == 3 )
         {
-            isLv3 = true;
-            LoadLevel(LevelLoader.next_level);
-            Debug.Log (" LOADED LV3  ->" + current_level);
+            //isLv3 = true;
+            LoadLevel(GameManager.GetLevel());
+            Debug.Log (" LOADED LV3  ->" + GameManager.GetLevel());
             // Make Checkpoint visible
             foreach (var item in checkpoint_list)
             {
@@ -63,11 +61,11 @@ public class GameController : LevelController
                 }
             }
         }
-        if ( LevelLoader.next_level == 4 && isLv4 == false)
+        if ( GameManager.GetLevel() == 4 )
         {
-            isLv4 = true;
-            LoadLevel(LevelLoader.next_level);
-            Debug.Log (" LOADED LV4  ->" + current_level);
+            //isLv4 = true;
+            LoadLevel(GameManager.GetLevel());
+            Debug.Log (" LOADED LV4  ->" + GameManager.GetLevel());
             // Make Checkpoint visible
             foreach (var item in checkpoint_list)
             {
@@ -78,11 +76,11 @@ public class GameController : LevelController
                 }
             }
         }
-        if ( LevelLoader.next_level == 5 && isLv5 == false)
+        if ( GameManager.GetLevel() == 5 )
         {
-            isLv5 = true;
-            LoadLevel(LevelLoader.next_level);
-            Debug.Log (" LOADED LV5 - LAST ONE  ->" + current_level);
+            //isLv5 = true;
+            LoadLevel(GameManager.GetLevel());
+            Debug.Log (" LOADED LV5 - LAST ONE  ->" + GameManager.GetLevel());
             // Make Checkpoint visible
             foreach (var item in checkpoint_list)
             {
@@ -96,37 +94,49 @@ public class GameController : LevelController
     }
     void Update()
     {
+         
+
         if(game_state) {
-            if (Input.GetKeyDown(KeyCode.Return)){
-                if (isPaused == true)
-                {
-                    ClearMessage();
-                    Timer._go = true;
-                }
+            
+            if (Timer._go == false)
+            {
+               // PlayerCar.
             }
+            if (Input.GetKeyDown(KeyCode.Return) && Timer._go == false)
+            {
+                ClearMessage();
+                Timer._go = true;
+            }
+            
             if (Input.GetKeyDown(KeyCode.P) && Timer._go ){
                 
-                if (isPaused) 
+                if (GameManager.GetIsPaused()) 
                 {
-                    PauseGame();
-                    isPaused = false;
+                    //PauseGame();
+                   // isPaused = false;
+                    GameManager.Resume();
+                    ClearMessage();
                 }else{
-                    isPaused = true;
-                    ResumeGame();
+                    //isPaused = true;
+                    //ResumeGame();
+                    ShowMessage("PAUSED!");
+                    GameManager.Pause();
                 }
             }
-            if (new_msg)
+            if (GameManager.GetNewMsg())
             {
                 ShowMessage(msg);
             }
-            this.LoadMoney();
-            if(current_level == 1 && LevelController.level_control[current_level] == false){
-                Debug.Log ("START The GAME CONTROLLER  SAYS: hey LV ->" + current_level);
-                LevelController.level_control[current_level] = true;
-                this.LoadLevel( current_level );
+
+            if(GameManager.GetLevel() == 1 && LevelController.level_control[GameManager.GetLevel()] == false){
+                UI_GAME_OVER.SetActive(false);
+                Debug.Log ("START The GAME CONTROLLER  SAYS: hey LV ->" + GameManager.GetLevel() );
+
+                LevelController.level_control[GameManager.GetLevel()] = true;
+                this.LoadLevel( GameManager.GetLevel() );
 
                 // Make Checkpoint visible
-                int index = 0;
+                
                 foreach (var item in checkpoint_list)
                 {
                     check_point  = GameObject.FindWithTag(item);
@@ -151,55 +161,62 @@ public class GameController : LevelController
     }
 
     public void ShowMessage(string message){
+        if (mission_messageText == null) mission_messageText =  GameObject.Find("Info").GetComponent<TextMeshProUGUI>();
+        
         mission_messageText.gameObject.SetActive(true);
         UI_MESSAGE.SetActive(true);
         mission_messageText.text = message;
-        new_msg = false;
+        GameManager.SetNewMsg(false);
     }
 
     public void ClearMessage(){
+        if (mission_messageText == null) mission_messageText =  GameObject.Find("Message").GetComponent<TextMeshProUGUI>();
+        
         mission_messageText.gameObject.SetActive(false);
         UI_MESSAGE.SetActive(false);
         mission_messageText.text = "";
-        new_msg = false;
+        GameManager.SetNewMsg(false);
     }
     public void DisplayScore(){
-        TextMeshProUGUI finaltime = GameObject.Find("Final_time").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI earned = GameObject.Find("Earned_cash").GetComponent<TextMeshProUGUI>();
+        if(UI_RESULTS == null){
+            UI_RESULTS = GameObject.Find("BG_Result");
+//            UI_RESULTS.SetActive(true);
+        }else{
+            UI_RESULTS.SetActive(true);
+        }
+
+        UI_RESULTS.SetActive(true);
+         foreach (Transform childTransform in UI_RESULTS.transform) 
+        {
+            childTransform.gameObject.SetActive(true);
+        }
+        //GameManager.ShowResults();
+        if (finaltime == null) finaltime = GameObject.Find("Final_time").GetComponent<TextMeshProUGUI>();
+        if (earned == null) earned = GameObject.Find("Earned_cash").GetComponent<TextMeshProUGUI>();
+
+        
         earned.color = Color.green;
-        finaltime.text = "Time: " + this.timerText.text;
-        earned.text = "$" + this.payment.ToString("F2");
-    }
-    void PauseGame ()
-    {
-        ShowMessage("PAUSED");
-        Time.timeScale = 0;
-    }
-    
-    void ResumeGame ()
-    {
-        ClearMessage();
-        Time.timeScale = 1;
+        finaltime.text = "Time: " +  GameManager.GetFinalTime(); // T.timerText.text;
+        earned.text = "$" + GameManager.GetPayment().ToString("F2");
     }
 
+
+    
+
+ 
     public void RestartGame(){
-        
-        
-        this.LoadLevel(1);
-        game_state = true;
         UI_GAME_OVER.SetActive(false);
         ResetAllVariables();
-        
-        SceneManager.LoadScene("LevelLoader");
-        
+       // SceneManager.LoadScene("LevelLoader");
     }
+
     public void LoadMenu(){
        
         ResetAllVariables();
         SceneManager.LoadScene("Menu");
     }
     void GameOver(){
-        new_msg = false;
+        GameManager.SetNewMsg(false);
         msg = "";
         //Time.timeScale = 0;
         UI_GAME_OVER.SetActive(true);
@@ -207,39 +224,23 @@ public class GameController : LevelController
     }
 
     void ResetAllVariables(){
-         
-        Timer._go = false;
-        
+        Timer._delivery_completed = false;
         game_state = true;
-        current_level = 1;
-        LevelController.current_level = current_level;
-        LevelLoader.next_level = current_level;
-        money = 100;
-        this.SaveMoney();
+        GameManager.SetLevel(1);
+        counter = false;
+        UI_GAME_OVER.SetActive(false);
         for (int i = 0; i < LevelController.level_control.Length; i++)
         {
-            LevelController.level_control[current_level] = false;
+            LevelController.level_control[i] = false;
+        //    print("Levels reseted: " + LevelController.level_control[i]);
         }
-        
-        isLv2 = false;
-        isLv3 = false;
-        isLv4 = false;
-        isLv5 = false;
-        
-        // Enable all checkpoints back
-       /* int index = 0;
-        foreach (var item in checkpoint_list)
-        {
-            check_point  = GameObject.FindWithTag(item);
-            if (check_point == null)
-            {
-                check_point = checkpoints_objs[index];
-                index++;
-            }
-  
-            check_point.SetActive(true);
-        }*/
 
+       
+
+        SceneManager.LoadScene("GameTest", LoadSceneMode.Single);
+        
+       // SceneManager.LoadScene("LevelLoader", LoadSceneMode.Single);
+
+       // SceneManager.LoadSceneAsync("LevelLoader", LoadSceneMode.Single);
     }
-    
 }

@@ -13,7 +13,7 @@ public class PlayerCar : Cars
     [SerializeField] CinemachineVirtualCamera lookLeftCam;
     
     [SerializeField] public HealthBar health_bar;
-    private readonly float damage = 1 ;
+    private readonly float damage = 0.1f ;
     public float new_axi = -0.9f;
 
     // Gamepad gamepad = Gamepad.current;
@@ -42,10 +42,18 @@ public class PlayerCar : Cars
         {
             Move(); 
         }
-        Break();
+        
+        if(Input.GetKeyDown(KeyCode.W)){
+            Move(); 
+        }
+        if(Input.GetKeyDown(KeyCode.E)){
+            Break();
+        }
+        
     }
 
     private void Update(){
+     
         if(Timer._go == true &&  GameController.game_state == true)
         {
             AnimateWheels();
@@ -77,11 +85,6 @@ public class PlayerCar : Cars
                     //Debug.Log("Look to Back");
                 }
             }
-                
-         
-           
-           
-            
         }
        
         if (health_bar.GetCurrentHealth() <= 0)
@@ -90,10 +93,15 @@ public class PlayerCar : Cars
         }
     }
 
+
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag != "Player" && other.gameObject.tag != "BreakLight")
         {
-            PlayerDamage(); 
+            if (!Timer._delivery_completed)
+            {
+                PlayerDamage(); 
+                
+            }
         }
     }
         
@@ -103,17 +111,23 @@ public class PlayerCar : Cars
     }
 
     private void LateUpdate() {
-        float turnAxis = gamepad.leftStick.x.ReadValue(); // Lê o eixo X do stick esquerdo
-         // Rotação das rodas
-        float newTurnAxis = gamepad.leftStick.x.ReadValue(); // Lê o eixo X do stick esquerdo
-        if (Mathf.Abs(newTurnAxis) > 0.1f) // Verifica se o stick esquerdo está sendo movido para a direita ou esquerda
+        if (!GameManager.usingKeyBoard)
         {
-            turnAxis = newTurnAxis; // Atualiza o eixo de rotação das rodas
+            float turnAxis = gamepad.leftStick.x.ReadValue();               // Lê o eixo X do stick esquerdo
+            // Rotação das rodas
+            float newTurnAxis = gamepad.leftStick.x.ReadValue();            // Lê o eixo X do stick esquerdo
+            
+        if (Mathf.Abs(newTurnAxis) > 0.1f)                              // Verifica se o stick esquerdo está sendo movido para a direita ou esquerda
+        {
+            turnAxis = newTurnAxis;                                     // Atualiza o eixo de rotação das rodas
             Turn();
         }
         else
         {
-            turnAxis = 0f; // Reseta o eixo de rotação das rodas
+            turnAxis = 0f;                                              // Reseta o eixo de rotação das rodas
+            Turn();
+        }
+        }else{
             Turn();
         }
 

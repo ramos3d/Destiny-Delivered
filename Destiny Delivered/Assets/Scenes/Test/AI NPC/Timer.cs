@@ -9,16 +9,28 @@ public class Timer : MonoBehaviour
     public TMP_Text milliText;
 
     [Header("Time in seconds")]
-    public static float timeValue = 0;
+    public static float timeValue;
     public float milliseconds;
     public static bool _delivery_completed = false;
     public static bool _go = false;
     public static bool _time_over = false;
 
+   
+
     private void Start() {
+        timeValue = 120;
         _delivery_completed = false;
         _go = false;
         _time_over = false;
+    if (timerText == null)
+    {       
+        timerText = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
+    }
+    if (milliText == null)
+    {       
+        milliText = GameObject.Find("Timer_milliseconds").GetComponent<TextMeshProUGUI>();
+    }
+       
     }
     void Update()
     {
@@ -75,8 +87,28 @@ public class Timer : MonoBehaviour
         }
 
         if (timeToDisplay == 0){
-             timerText.text = "00:00";
-             milliText.text = "00";
+            if (timerText == null)
+            {       
+                timerText = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
+            }
+            if (milliText == null)
+            {       
+                milliText = GameObject.Find("Timer_milliseconds").GetComponent<TextMeshProUGUI>();
+            }
+            if(timerText != null) timerText.text = "00:00";
+            if(milliText != null)  milliText.text = "00"; 
         }
+
+        // Keeping timer for final result 
+        GameManager.SetFinalTime(minutes +":"+ seconds +":"+milliseconds.ToString().Substring(1));
+    }
+
+
+    public void ResetTimer()
+    {
+        timeValue = 0;
+        milliseconds = 0;
+        DisplayTime(timeValue);
+        Time.timeScale = 1f;
     }
 }

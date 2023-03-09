@@ -53,10 +53,8 @@ public class CarSelfDrive : MonoBehaviour
             {
                 nodes.Add(pathTransforms[i]);
                 
-            }
-            
+            }   
         }
-
     }
 
 
