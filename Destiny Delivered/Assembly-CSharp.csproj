@@ -37,12 +37,10 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scenes\Test\AI NPC\GameController.cs" />
-     <Compile Include="Assets\Scenes\Test\AI NPC\ResetTimer.cs" />
      <Compile Include="Assets\Scenes\Test\AI NPC\Timer.cs" />
      <Compile Include="Assets\Scenes\Test\AI NPC\GPSAnimator.cs" />
      <Compile Include="Assets\Scripts\Cars.cs" />
      <Compile Include="Assets\Toon City\Scripts\PropMovementScript.cs" />
-     <Compile Include="Assets\Scenes\Test\AI NPC\Game.cs" />
      <Compile Include="Assets\Scenes\Test\AI NPC\NPCWheels.cs" />
      <Compile Include="Assets\Scripts\AICarNPC.cs" />
      <Compile Include="Assets\Scenes\Test\AI NPC\LevelController.cs" />
@@ -53,12 +51,11 @@
      <Compile Include="Assets\Scenes\Test\AI NPC\NPCHelicopter.cs" />
      <Compile Include="Assets\Scripts\PlayerCar.cs" />
      <Compile Include="Assets\Scripts\Garage.cs" />
-     <Compile Include="Assets\Scripts\CameraSwitch.cs" />
      <Compile Include="Assets\Scripts\CarController.cs" />
      <Compile Include="Assets\Scripts\PackDamage.cs" />
-     <Compile Include="Assets\Scenes\Test\AI NPC\GameManager.cs" />
      <Compile Include="Assets\Scenes\Test\AI NPC\CarSelfDrive.cs" />
      <Compile Include="Assets\Scenes\Test\AI NPC\CheckPoint.cs" />
+     <Compile Include="Assets\Scripts\CameraSwitch.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
