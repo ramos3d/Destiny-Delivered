@@ -5,15 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : LevelController
 {
+    public static int next_level;
     private int seconds = 2;
+
+    // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Load());
+        next_level = LevelController.current_level; // This current_level comes already added to +1
+        if (next_level == 1)
+        {
+            SceneManager.LoadScene("AI NPC");
+        }else{
+
+            StartCoroutine(Load( next_level));
+            Debug.Log("Scene LevelLoader says: next level will be --> " + next_level);
+        }
     }
 
-     IEnumerator Load()
+     IEnumerator Load(int level_number)
     {
-        yield return new WaitForSeconds(seconds); 
-        SceneManager.LoadScene("GameTest", LoadSceneMode.Single);
+        yield return new WaitForSeconds(seconds); // Wait for x seconds;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
