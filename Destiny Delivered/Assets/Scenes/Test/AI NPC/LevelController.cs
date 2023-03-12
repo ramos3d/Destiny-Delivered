@@ -17,8 +17,6 @@ public class LevelController : Timer
     private  GameObject star;
     private int nextLevel;
 
-  
-
     public void LoadLevel(int level_number){
         LoadMoney();
         current_level = level_number;
@@ -34,7 +32,7 @@ public class LevelController : Timer
                 wallet.text = "$" + money.ToString("F2");
 
                 payment = Random.Range(15, 50);
-                destination = "1. Welcome Elonzo,\n\n- As your first day, drop this box at East Warehouse Base!";
+                destination = "1. Welcome Elonzo,\n\n- In your first day, drop this box at East Warehouse Base!";
                 DisplayBossMessage(destination);
                 DisplayPaymentValue(payment.ToString("F2"));
                 SaveMoney();

@@ -8,7 +8,7 @@ public class CheckPoint : GameController
     private float seconds = 2f;
     private bool isOn = false;
 
-    
+ 
   // Confirm that the player has arrived at the drop point
     private void OnTriggerEnter(Collider other) {
         isOn = false;
@@ -77,12 +77,10 @@ public class CheckPoint : GameController
         UI_RESULTS.SetActive(false);
 
         // Prevent mutiple calls to the same level
-       
         if(!isOn)
         {
             this.NextLevel();
             isOn = true;
         }
-    
     }
 }
