@@ -213,7 +213,7 @@ public class GameController : LevelController
         Time.timeScale = 1;
         Timer._go = false;
         game_state = true;
-        Timer._delivery_completed = false;           // stop the timer
+        Timer.delivery_completed = false;           // stop the timer
         LevelController.current_level = current_level = 1;
         LevelLoader.next_level = current_level;
         money = 100;

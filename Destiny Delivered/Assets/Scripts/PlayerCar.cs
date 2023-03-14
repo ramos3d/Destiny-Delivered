@@ -48,6 +48,7 @@ public class PlayerCar : Cars
     private void Update(){
         if(Timer._go == true &&  GameController.game_state == true)
         {
+           
             AnimateWheels();
             GetInputs();
 
@@ -77,11 +78,6 @@ public class PlayerCar : Cars
                     //Debug.Log("Look to Back");
                 }
             }
-                
-         
-           
-           
-            
         }
        
         if (health_bar.GetCurrentHealth() <= 0)

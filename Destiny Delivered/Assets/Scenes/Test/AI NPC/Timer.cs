@@ -11,12 +11,14 @@ public class Timer : MonoBehaviour
     [Header("Time in seconds")]
     public static float timeValue = 0;
     public float milliseconds;
-    public static bool _delivery_completed = false;
+    public static bool delivery_completed = false;
     public static bool _go = false;
     public static bool _time_over = false;
 
+    public static bool isCarActive = true;
+
     private void Start() {
-        _delivery_completed = false;
+        delivery_completed = false;
         _go = false;
         _time_over = false;
     }
@@ -28,7 +30,7 @@ public class Timer : MonoBehaviour
             return;
         }
 
-        if(_delivery_completed) 
+        if(delivery_completed) 
         {
             timerText.color = Color.green;
             milliText.color = Color.green;
@@ -46,6 +48,7 @@ public class Timer : MonoBehaviour
         {
             RunTimer();
         }
+        
     }
 
     

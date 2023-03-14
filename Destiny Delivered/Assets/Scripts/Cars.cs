@@ -46,7 +46,7 @@ public class Cars : MonoBehaviour
     
     public virtual void Break(){
         //if(Input.GetKey(KeyCode.E) ||   gamepad.aButton.wasPressedThisFrame){
-        if (Gamepad.current != null && Gamepad.current.buttonSouth.isPressed){
+        if (Gamepad.current != null && Gamepad.current.buttonSouth.isPressed  || Timer.isCarActive == false){
            current_break_force = breaking_force;
            break_light.SetActive(true);
         }else{

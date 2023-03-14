@@ -20939,7 +20939,6 @@ GameObject:
   - component: {fileID: 1405083560}
   - component: {fileID: 1405083559}
   - component: {fileID: 1405083558}
-  - component: {fileID: 1405083562}
   m_Layer: 5
   m_Name: UI_Canvas
   m_TagString: Untagged
@@ -21034,18 +21033,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1405083562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1405083557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb7cc2ee2e01bc244971fdecec809687, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1405265302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31655,7 +31642,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2111635383}
-  m_LocalRotation: {x: 0, y: 0.99898845, z: -0.04496858, w: 0}
+  m_LocalRotation: {x: 0, y: 0.99898845, z: -0.044968314, w: 0}
   m_LocalPosition: {x: 105.7, y: 15.700001, z: -60.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -34182,6 +34169,14 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 534679654412274457, guid: 3220cffa23d416c4e969fb2b70c8d4cd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.032999
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129294755817908178, guid: 3220cffa23d416c4e969fb2b70c8d4cd, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9129294755929718023, guid: 3220cffa23d416c4e969fb2b70c8d4cd, type: 3}
       propertyPath: health_bar
       value: 
@@ -34251,12 +34246,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2098455237}
     - target: {fileID: 9129294756357820370, guid: 3220cffa23d416c4e969fb2b70c8d4cd, type: 3}
+      propertyPath: maxAcceleration
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129294756357820370, guid: 3220cffa23d416c4e969fb2b70c8d4cd, type: 3}
       propertyPath: speedometerText
       value: 
       objectReference: {fileID: 855015910}
     - target: {fileID: 9129294756357820372, guid: 3220cffa23d416c4e969fb2b70c8d4cd, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129294756944868715, guid: 3220cffa23d416c4e969fb2b70c8d4cd, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9133283325454808077, guid: 3220cffa23d416c4e969fb2b70c8d4cd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.072998
+      objectReference: {fileID: 0}
+    - target: {fileID: 9133283327037231056, guid: 3220cffa23d416c4e969fb2b70c8d4cd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.141
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

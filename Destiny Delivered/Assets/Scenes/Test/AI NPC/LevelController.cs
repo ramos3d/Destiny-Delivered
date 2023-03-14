@@ -21,6 +21,7 @@ public class LevelController : Timer
         LoadMoney();
         current_level = level_number;
         nextLevel = current_level + 1;
+        Timer.isCarActive = true;
         switch (level_number)
         {
             case 1:

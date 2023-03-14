@@ -9,7 +9,9 @@ public class MainMenu : MonoBehaviour
     public void StartGame(){
         Debug.Log("game started");
        // SceneManager.LoadScene("Game");                 // Load the Scene Game.
-        SceneManager.LoadScene("AI NPC");
+        //SceneManager.LoadScene("AI NPC");
+        SceneManager.LoadScene("LevelLoader");
+
     }
 
     public void QuitGame(){
