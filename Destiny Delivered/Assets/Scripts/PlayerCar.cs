@@ -87,10 +87,12 @@ public class PlayerCar : Cars
     }
 
     private void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag != "Player" && other.gameObject.tag != "BreakLight")
-        {
-            PlayerDamage(); 
-        }
+        
+        
+            if (other.gameObject.tag != "Player" && other.gameObject.tag != "BreakLight")
+            {
+                PlayerDamage(); 
+            }
     }
         
     public void PlayerDamage(){
@@ -112,16 +114,5 @@ public class PlayerCar : Cars
             turnAxis = 0f; // Reseta o eixo de rotação das rodas
             Turn();
         }
-
-
-
-
-/*
-        if (Mathf.Abs(turnAxis) > 0.1f) // Verifica se o stick esquerdo está sendo movido para a direita ou esquerda
-        {
-            Turn(); // Executa o método de rotação com base no eixo X do stick esquerdo
-        }
-        */
-       // Turn();
     }
 }

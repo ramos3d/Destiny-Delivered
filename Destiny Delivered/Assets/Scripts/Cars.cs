@@ -99,16 +99,18 @@ public class Cars : MonoBehaviour
         speedometerText.text = current_speed.ToString("F2"); 
     }
     void ControlMaxSteerAngleBasedOnVelocity(){
-        if (current_speed <=5)
+        
+        
+        if (current_speed <=2)
         {
-            maxSteerAngle = 45;
+            maxSteerAngle = 45.0f;
         }
-        if (current_speed > 5 && current_speed < 15)
+        if (current_speed >2 && current_speed < 10)
         {
-            maxSteerAngle = 30;
-        }else if (current_speed >= 15)
+            maxSteerAngle = 30.0f;
+        }else if (current_speed >= 10)
         {
-            maxSteerAngle = 5;
+            maxSteerAngle = 20.0f;
         }
         
         
