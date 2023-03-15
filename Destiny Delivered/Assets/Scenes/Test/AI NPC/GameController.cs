@@ -146,6 +146,8 @@ public class GameController : LevelController
             {
                 ShowMessage(msg);
             }
+
+            
             this.LoadMoney();
            
         }
