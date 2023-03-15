@@ -12,15 +12,14 @@ public class LevelController : Timer
     private string destination = null;     
     public float  money;
     public TMP_Text wallet;
-    public static int current_level = 1;
+    //public static int current_level = 1;
     public static bool[] level_control = new bool[]{false, false, false, false, false, false};
     private  GameObject star;
-    private int nextLevel;
+    //private int nextLevel;
 
     public void LoadLevel(int level_number){
         LoadMoney();
-        current_level = level_number;
-        nextLevel = current_level + 1;
+  
         Timer.isCarActive = true;
         switch (level_number)
         {
@@ -86,7 +85,7 @@ public class LevelController : Timer
 
         Timer._go = false;
         GameController.new_msg = true;
-        GameController.msg = "Press ENTER when you are ready! \n Level: "+current_level;
+        GameController.msg = "Press ENTER when you are ready! \n Level: "+GameManager.GetLevel();
         CalculateProgress();
         Timer.timeValue = 60;                                                                               
         wallet.text = "$"+money.ToString("F2");
@@ -127,17 +126,16 @@ public class LevelController : Timer
     }
 
     public void NextLevel(){
-        if (current_level + 1 <= total_levels){
-            level_control[current_level] = true;
-            current_level ++;
+        if (GameManager.GetLevel() + 1 <= total_levels){
+            level_control[GameManager.GetLevel()] = true;
+          
+            GameManager.SetLevel(GameManager.GetLevel() + 1);
             // Reload scene so the GameController will call the LoadLevel()
             SaveMoney();
             SceneManager.LoadScene("LevelLoader", LoadSceneMode.Additive);
             Debug.Log("Scene Reloaded");
-        }else if(current_level >= total_levels){
+        }else if(GameManager.GetLevel() >= total_levels){
             Debug.Log("Thanks for playing Destiny Delivered!");
-        }else{
-            Debug.Log("Level atual retornou >>>>>> "+ level_control[current_level] + " | na position: "+ current_level);
         }
     }
 }

@@ -75,11 +75,11 @@ public class Timer : MonoBehaviour
             milliText.text = milliseconds.ToString().Substring(1);
             
            
+            if (timeToDisplay == 0){
+                timerText.text = "00:00";
+                milliText.text = "00";
+            }
         }
 
-        if (timeToDisplay == 0){
-             timerText.text = "00:00";
-             milliText.text = "00";
-        }
     }
 }

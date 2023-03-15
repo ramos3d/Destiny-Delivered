@@ -17,10 +17,6 @@ public class GameController : LevelController
     public static bool new_msg = false; 
     private bool isPaused = true;
     
-    public static  bool isLv2 = false;
-    public static bool isLv3 = false;
-    public static bool isLv4 = false;
-    public static bool isLv5 = false;
     public static bool game_state = true;
     private bool counter = true;
     private GameObject check_point;
@@ -30,82 +26,83 @@ public class GameController : LevelController
         game_state = true;
     }
     private void Start() {
-        switch (LevelLoader.next_level)
+        switch (GameManager.GetLevel())
         {
             case 2:
-                if (!isLv2)
+                if (LevelController.level_control[GameManager.GetLevel()] == false)
                 {
-                    isLv2 = true;
-                    LoadLevel(LevelLoader.next_level);
-                    Debug.Log (" LOADED LV2  ->" + current_level);
+                    LevelController.level_control[GameManager.GetLevel()] = true;
+                    Debug.Log (" LOADED LV2  ->" + GameManager.GetLevel() + " control: " + LevelController.level_control[GameManager.GetLevel()]);
+                    LoadLevel(GameManager.GetLevel());
                     // Make Checkpoint visible
                     foreach (var item in checkpoint_list)
                     {
                         check_point  = GameObject.FindWithTag(item);
-                        if (item != "Checkpoint_2")
+                        if (item != "Checkpoint_2" && check_point != null)
                         {
                             check_point.SetActive(false);
                         }
                     }
                 }
-                break;
-                case 3:
-                if ( !isLv3)
-                    {
-                        isLv3 = true;
-                        LoadLevel(LevelLoader.next_level);
-                        Debug.Log (" LOADED LV3  ->" + current_level);
-                        // Make Checkpoint visible
-                        foreach (var item in checkpoint_list)
-                        {
-                            check_point  = GameObject.FindWithTag(item);
-                            if (item != "Checkpoint_3")
-                            {
-                                check_point.SetActive(false);
-                            }
-                        }
-                    }
-                break;
-                case 4:
-                if (!isLv4)
+            break;
+            case 3:
+            if (LevelController.level_control[GameManager.GetLevel()] == false)
+            {
+                level_control[GameManager.GetLevel()] = true;
+                LoadLevel(GameManager.GetLevel());
+                Debug.Log (" LOADED LV3  ->" + GameManager.GetLevel());
+                // Make Checkpoint visible
+                foreach (var item in checkpoint_list)
                 {
-                    isLv4 = true;
-                    LoadLevel(LevelLoader.next_level);
-                    Debug.Log (" LOADED LV4  ->" + current_level);
-                    // Make Checkpoint visible
-                    foreach (var item in checkpoint_list)
+                    check_point  = GameObject.FindWithTag(item);
+                    if (item != "Checkpoint_3")
                     {
-                        check_point  = GameObject.FindWithTag(item);
-                        if (item != "Checkpoint_4")
-                        {
-                            check_point.SetActive(false);
-                        }
+                        check_point.SetActive(false);
                     }
                 }
-
-                break;
-                case 5:
-                if (!isLv5)
+            }
+            break;
+            case 4:
+            if (LevelController.level_control[GameManager.GetLevel()] == false)
+            {
+                level_control[GameManager.GetLevel()] = true;
+                LoadLevel(GameManager.GetLevel());
+                Debug.Log (" LOADED LV4  ->" + GameManager.GetLevel());
+                // Make Checkpoint visible
+                foreach (var item in checkpoint_list)
                 {
-                    isLv5 = true;
-                    LoadLevel(LevelLoader.next_level);
-                    Debug.Log (" LOADED LV5 - LAST ONE  ->" + current_level);
-                    // Make Checkpoint visible
-                    foreach (var item in checkpoint_list)
+                    check_point  = GameObject.FindWithTag(item);
+                    if (item != "Checkpoint_4")
                     {
-                        check_point  = GameObject.FindWithTag(item);
-                        if (item != "Checkpoint_5")
-                        {
-                            check_point.SetActive(false);
-                        }
+                        check_point.SetActive(false);
                     }
                 }
-                break;
+            }
+            break;
+            case 5:
+            if (LevelController.level_control[GameManager.GetLevel()] == false)
+            {
+                level_control[GameManager.GetLevel()] = true;
+                LoadLevel(GameManager.GetLevel());
+                Debug.Log (" LOADED LV5 - LAST ONE  ->" + GameManager.GetLevel());
+                // Make Checkpoint visible
+                foreach (var item in checkpoint_list)
+                {
+                    check_point  = GameObject.FindWithTag(item);
+                    if (item != "Checkpoint_5")
+                    {
+                        check_point.SetActive(false);
+                    }
+                }
+            }
+                
+            break;
             default:
-            if(current_level == 1 && LevelController.level_control[current_level] == false){
-                Debug.Log ("START The GAME CONTROLLER  SAYS: hey LV ->" + current_level);
-                LevelController.level_control[current_level] = true;
-                this.LoadLevel( current_level );
+            if(LevelController.level_control[GameManager.GetLevel()] == false){
+                Debug.Log ("START The GAME CONTROLLER  SAYS: hey LV ->" + GameManager.GetLevel());
+                LevelController.level_control[GameManager.GetLevel()] = true;
+                //this.LoadLevel( GameManager.GetLevel() );
+                LoadLevel(GameManager.GetLevel());
 
                 // Make Checkpoint visible
                 foreach (var item in checkpoint_list)
@@ -119,7 +116,7 @@ public class GameController : LevelController
                     }
                 }
             }
-                break;
+            break;
         }
         
 
@@ -214,19 +211,17 @@ public class GameController : LevelController
         Timer._go = false;
         game_state = true;
         Timer.delivery_completed = false;           // stop the timer
-        LevelController.current_level = current_level = 1;
-        LevelLoader.next_level = current_level;
+        //LevelController.current_level = current_level = 1;
+        //GameManager.GetLevel() = current_level;
+        GameManager.SetLevel(1);
+
         money = 100;
         this.SaveMoney();
         for (int i = 0; i < LevelController.level_control.Length; i++)
         {
-            LevelController.level_control[current_level] = false;
+            LevelController.level_control[GameManager.GetLevel()] = false;
         }
         
-        isLv2 = false;
-        isLv3 = false;
-        isLv4 = false;
-        isLv5 = false;
         // Enable all checkpoints back
         int index = 0;
         foreach (var item in checkpoint_list)

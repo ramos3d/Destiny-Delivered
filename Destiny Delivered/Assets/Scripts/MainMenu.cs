@@ -7,11 +7,9 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public void StartGame(){
-        Debug.Log("game started");
+        GameManager.SetLevel(1);
+        SceneManager.LoadScene("AI NPC");
        // SceneManager.LoadScene("Game");                 // Load the Scene Game.
-        //SceneManager.LoadScene("AI NPC");
-        SceneManager.LoadScene("LevelLoader");
-
     }
 
     public void QuitGame(){

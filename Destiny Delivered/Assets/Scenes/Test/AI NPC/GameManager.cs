@@ -41,7 +41,6 @@ public class GameManager : MonoBehaviour
          // Verify if there is a gamepad conected
         if (Gamepad.current != null)
         {
-
             SetIsUsingKeyBoard(false);
         }
     }
