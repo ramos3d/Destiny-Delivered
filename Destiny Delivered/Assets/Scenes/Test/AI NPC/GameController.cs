@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class GameController : LevelController
 {
@@ -21,7 +22,7 @@ public class GameController : LevelController
     private bool counter = true;
     private GameObject check_point;
     private string[] checkpoint_list = {"Checkpoint_1", "Checkpoint_2", "Checkpoint_3", "Checkpoint_4", "Checkpoint_5"};
-    
+   
     private void Awake() {
         game_state = true;
     }
@@ -124,7 +125,7 @@ public class GameController : LevelController
     void Update()
     {
         if(game_state) {
-            if (Input.GetKeyDown(KeyCode.Return)){
+            if (Input.GetKeyDown(KeyCode.Return) || Gamepad.current.buttonSouth.isPressed ){
                 if (isPaused == true)
                 {
                     ClearMessage();
