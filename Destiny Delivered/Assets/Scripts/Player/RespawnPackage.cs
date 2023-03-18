@@ -40,6 +40,7 @@ public class RespawnPackage : MonoBehaviour
         Timer.isCarActive = true;
         GameObject package = GameObject.Find("Paper_Pack");
         package.transform.position = GameObject.Find("RespawnPoint").transform.position;
+        package.transform.rotation = GameObject.Find("RespawnPoint").transform.rotation;
 
     }
 

@@ -125,7 +125,7 @@ public class GameController : LevelController
     void Update()
     {
         if(game_state) {
-            if (Input.GetKeyDown(KeyCode.Return) || Gamepad.current.buttonSouth.isPressed ){
+            if (Input.GetKeyDown(KeyCode.Return) || Gamepad.current.buttonEast.isPressed ){
                 if (isPaused == true)
                 {
                     ClearMessage();

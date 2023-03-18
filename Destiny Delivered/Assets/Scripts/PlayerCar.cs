@@ -101,17 +101,17 @@ public class PlayerCar : Cars
     }
 
     private void LateUpdate() {
-        float turnAxis = gamepad.leftStick.x.ReadValue(); // Lê o eixo X do stick esquerdo
-         // Rotação das rodas
-        float newTurnAxis = gamepad.leftStick.x.ReadValue(); // Lê o eixo X do stick esquerdo
-        if (Mathf.Abs(newTurnAxis) > 0.1f) // Verifica se o stick esquerdo está sendo movido para a direita ou esquerda
+        float turnAxis = gamepad.leftStick.x.ReadValue();   // Read the X axis of the left stick
+        float newTurnAxis = gamepad.leftStick.x.ReadValue(); 
+        // Verify if the stick is being moved to left or right
+        if (Mathf.Abs(turnAxis) > 0.1f)                  
         {
-            turnAxis = newTurnAxis; // Atualiza o eixo de rotação das rodas
+            turnAxis = newTurnAxis;                     // Update wheels rotation
             Turn();
         }
         else
         {
-            turnAxis = 0f; // Reseta o eixo de rotação das rodas
+            turnAxis = 0f; // reset axis
             Turn();
         }
     }
