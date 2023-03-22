@@ -52,9 +52,13 @@ public class GameManager : MonoBehaviour
     }
 
     // Handles the end of the game
-    public void GameOver()
+    public static void GameOver()
     {
-        // Add code to handle the end of the game
+        GameObject windowGameOver = GameObject.Find("Panel_GameOver");
+        if (windowGameOver != null){
+            windowGameOver.SetActive(true);
+            GameController.new_msg = false;
+        } 
     }
 
     // Pauses the game

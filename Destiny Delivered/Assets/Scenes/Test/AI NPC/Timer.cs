@@ -13,14 +13,14 @@ public class Timer : MonoBehaviour
     public float milliseconds;
     public static bool delivery_completed = false;
     public static bool _go = false;
-    public static bool _time_over = false;
+    public static bool time_over = false;
 
     public static bool isCarActive = true;
 
     private void Start() {
         delivery_completed = false;
         _go = false;
-        _time_over = false;
+        time_over = false;
     }
     void Update()
     {
@@ -37,14 +37,16 @@ public class Timer : MonoBehaviour
             DisplayTime(timeValue);
             return;
         }
-        if (_time_over)
+        if (time_over)
         {
             timerText.color = Color.red;
             milliText.color = Color.red;
             DisplayTime(timeValue);
+            GameManager.GameOver();
+            GameController.game_state = false;
             return;
         }
-        if (!_time_over)
+        if (!time_over)
         {
             RunTimer();
         }
@@ -57,7 +59,7 @@ public class Timer : MonoBehaviour
             timeValue -= Time.deltaTime;   
         }else{
             timeValue = 0;
-            _time_over = true;
+            time_over = true;
         }
         DisplayTime(timeValue);
     }

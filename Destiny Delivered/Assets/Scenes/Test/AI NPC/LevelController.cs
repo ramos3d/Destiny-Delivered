@@ -5,8 +5,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 public class LevelController : Timer
 {
-  
-    private int total_levels = 5;
+    public static int total_levels = 5;
     //Player variables based on level
     public float payment ;         // Random.Rande(15, ?)
     private string destination = null;     
@@ -72,9 +71,6 @@ public class LevelController : Timer
                 destination = "5. New Order:\n\n- Drive to the West Arena and drop it there ASAP!";
                 SetVariablesToThisLevel(level_number, destination, star);
             break;
-            default:
-                // LOAD THE CREDITS AND GAME OVER ... THEN REDIRECT TO MENU
-            break;
         }
     }
 
@@ -135,7 +131,9 @@ public class LevelController : Timer
             SceneManager.LoadScene("LevelLoader", LoadSceneMode.Additive);
             Debug.Log("Scene Reloaded");
         }else if(GameManager.GetLevel() >= total_levels){
-            Debug.Log("Thanks for playing Destiny Delivered!");
+            //Debug.Log("Thanks for playing Destiny Delivered!");
+           // SceneManager.LoadScene("LevelLoader", LoadSceneMode.Additive);
+           
         }
     }
 }

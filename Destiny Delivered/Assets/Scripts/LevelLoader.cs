@@ -14,6 +14,11 @@ public class LevelLoader : LevelController
      IEnumerator Load()
     {
         yield return new WaitForSeconds(seconds); 
-        SceneManager.LoadScene("AI NPC", LoadSceneMode.Single);
+        if (GameManager.GetLevel() >= LevelController.total_levels)
+        {
+            SceneManager.LoadScene("Credits", LoadSceneMode.Single);
+        }else{
+            SceneManager.LoadScene("AI NPC", LoadSceneMode.Single);
+        }
     }
 }
