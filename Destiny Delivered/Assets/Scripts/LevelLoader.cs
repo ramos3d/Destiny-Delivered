@@ -18,7 +18,9 @@ public class LevelLoader : LevelController
         {
             SceneManager.LoadScene("Credits", LoadSceneMode.Single);
         }else{
-            SceneManager.LoadScene("AI NPC", LoadSceneMode.Single);
+            //SceneManager.LoadScene("AI NPC", LoadSceneMode.Single);
+            SceneManager.LoadScene("Game", LoadSceneMode.Single);
         }
+        
     }
 }
