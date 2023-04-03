@@ -60,6 +60,7 @@ public class PlayerCar : Cars
         if (Gamepad.current != null && Gamepad.current.rightTrigger.isPressed)
         {
             Move();
+            
         }
         // Brake the car
         Break();

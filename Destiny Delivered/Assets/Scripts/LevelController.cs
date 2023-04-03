@@ -7,7 +7,7 @@ public class LevelController : Timer
 {
     public static int total_levels = 5;
     //Player variables based on level
-    public float payment ;         // Random.Rande(15, ?)
+    public float payment ;        
     private string destination = null;     
     public float  money;
     public TMP_Text wallet;
@@ -26,7 +26,7 @@ public class LevelController : Timer
                 Timer._go = false;
                 GameController.new_msg = true;
                 GameController.msg = "Press ENTER when you are ready!";
-                timeValue = 120;                                                                                    // Set timer for this Level
+                timeValue = 100;                                                                                    // Set timer for this Level
                 money = 100.00f;
                 wallet.text = "$" + money.ToString("F2");
 
@@ -40,7 +40,6 @@ public class LevelController : Timer
                 star = GameObject.FindGameObjectWithTag("Star2");
                 destination = "2. New Order:\n\n- Go to the West Warehouse in Downtown.";
                 SetVariablesToThisLevel(level_number, destination, star);
-                //Debug.Log(" ------------------------------------------------------------------- money: "  + money);
             break;
             case 3:
                 star = GameObject.FindGameObjectWithTag("Star2");
@@ -88,7 +87,6 @@ public class LevelController : Timer
         payment = Random.Range(20, 75);
         DisplayBossMessage(destination);
         DisplayPaymentValue(payment.ToString("F2"));
-        //Debug.Log("Level: "+level+ " - Payment for this job: "+ payment);
         SaveMoney();
     }
 
@@ -133,7 +131,6 @@ public class LevelController : Timer
         }else if(GameManager.GetLevel() >= total_levels){
             //Debug.Log("Thanks for playing Destiny Delivered!");
            // SceneManager.LoadScene("LevelLoader", LoadSceneMode.Additive);
-           
         }
     }
 }

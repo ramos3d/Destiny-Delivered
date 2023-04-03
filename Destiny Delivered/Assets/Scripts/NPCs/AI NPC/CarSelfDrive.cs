@@ -17,7 +17,7 @@ public class CarSelfDrive : MonoBehaviour
     public float maxMotorque = 160f;
     public float maxBrakeTorque = 300f;
     public float maxSpeed = 20f;
-    public bool isBreaking = true;
+    public bool isBraking = true;
 
     private int currentNode = 0;
     
@@ -38,14 +38,6 @@ public class CarSelfDrive : MonoBehaviour
          
         Transform[] pathTransforms = path.GetComponentsInChildren<Transform>();         
         nodes = new List<Transform>();
-/*
-        foreach (var _path in pathTransforms)
-        {
-            if (_path != path.transform){
-                nodes.Add(path);
-            }
-        }
-*/
 
     for (int i = 0; i < pathTransforms.Length; i++)
         {
@@ -91,13 +83,13 @@ public class CarSelfDrive : MonoBehaviour
            if (hit.collider.tag == "NPC" || hit.collider.tag == "Player")
            {    
                // print("There is a car here: " + hit.collider.tag);
-                isBreaking = true;
+                isBraking = true;
            }
         }else 
         {
             if(!body_detected){
                // Debug.Log("It's free ");
-                isBreaking = false;
+                isBraking = false;
             }
         }
         
@@ -109,13 +101,13 @@ public class CarSelfDrive : MonoBehaviour
            if (hit.collider.tag == "NPC" || hit.collider.tag == "Player")
            {    
                 //print("Right detected: " + hit.collider.tag  );
-                isBreaking = true;
+                isBraking = true;
                 body_detected = true;
            }
         }else 
         {
                 //Debug.Log("It's free ");
-                isBreaking = false;
+                isBraking = false;
         }
         
         // RIGHT ANGLE
@@ -125,11 +117,11 @@ public class CarSelfDrive : MonoBehaviour
            if (hit.collider.tag == "NPC" || hit.collider.tag == "Player")
            {   
                 print("Right detected BREAK: ");
-                isBreaking = true;
+                isBraking = true;
            }
         }else 
         {
-            isBreaking = false;
+            isBraking = false;
         }
         */
        
@@ -140,13 +132,13 @@ public class CarSelfDrive : MonoBehaviour
            if (hit.collider.tag == "NPC" || hit.collider.tag == "Player")
            {    
                 //print("Left detected: " + hit.collider.tag  + Time.deltaTime);
-                isBreaking = true;
+                isBraking = true;
                 body_detected = true;
            }
         }else 
         {
                 //Debug.Log("It's free ");
-                isBreaking = false;
+                isBraking = false;
         }
         Debug.DrawRay(sideSensor, transform.TransformDirection(direction * sensorLength), Color.white);
     }
@@ -166,7 +158,7 @@ public class CarSelfDrive : MonoBehaviour
     private void Drive(){
         currentSpeed = 2 * Mathf.PI * wheelFL.radius * wheelFL.rpm * 60 / 1000 * Time.deltaTime;
 
-        if (currentSpeed < maxSpeed && !isBreaking)
+        if (currentSpeed < maxSpeed && !isBraking)
         {
             wheelFL.motorTorque = maxMotorque;
             wheelFR.motorTorque = maxMotorque;
@@ -192,7 +184,7 @@ public class CarSelfDrive : MonoBehaviour
 
 
     private void Braking(){
-        if (isBreaking)
+        if (isBraking)
         {
             // It maight turns beacking light on if it exists
             // Break wheels

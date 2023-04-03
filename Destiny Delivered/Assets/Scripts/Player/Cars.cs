@@ -45,7 +45,6 @@ public class Cars : MonoBehaviour
      
     
     public virtual void Break(){
-        //if(Input.GetKey(KeyCode.E) ||   gamepad.aButton.wasPressedThisFrame){
         if (Gamepad.current != null && Gamepad.current.buttonSouth.isPressed  || Timer.isCarActive == false){
            current_break_force = breaking_force;
            break_light.SetActive(true);
@@ -86,10 +85,19 @@ public class Cars : MonoBehaviour
                 float force = breaking_force * inputY ;
                 rb.AddForce(transform.forward * force * Time.deltaTime * 3);
             }
-        }
-        if (current_speed <0.25)
+        }else 
         {
             current_speed = 0;
+        }
+
+        // If player stopped accelerating
+        if (inputY == 0) 
+        {
+            current_speed -= Time.deltaTime * 100f;
+            float force = current_speed * Time.deltaTime;
+            rb.AddForce(transform.forward * force);
+            Debug.Log("Stopped Accelerating");
+            rb.velocity = Vector3.MoveTowards(rb.velocity, Vector3.zero, Time.deltaTime * breaking_force);
         }
            
     }
@@ -99,8 +107,6 @@ public class Cars : MonoBehaviour
         speedometerText.text = current_speed.ToString("F2"); 
     }
     void ControlMaxSteerAngleBasedOnVelocity(){
-        
-        
         if (current_speed <=2)
         {
             maxSteerAngle = 45.0f;
@@ -112,8 +118,6 @@ public class Cars : MonoBehaviour
         {
             maxSteerAngle = 20.0f;
         }
-        
-        
     }
 
    // Turn Front wheels to right-left

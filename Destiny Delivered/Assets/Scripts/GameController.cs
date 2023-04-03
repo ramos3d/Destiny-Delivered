@@ -147,10 +147,7 @@ public class GameController : LevelController
             {
                 ShowMessage(msg);
             }
-
-            
             this.LoadMoney();
-           
         }
         if (game_state == false)
         {
@@ -214,8 +211,6 @@ public class GameController : LevelController
         Timer._go = false;
         game_state = true;
         Timer.delivery_completed = false;           // stop the timer
-        //LevelController.current_level = current_level = 1;
-        //GameManager.GetLevel() = current_level;
         GameManager.SetLevel(1);
 
         money = 100;
